@@ -54,7 +54,6 @@ drawFeatures()
 function drawFeatures() {
 
   const dataLayer = L.geoJson(geojson, {
-
     pointToLayer: function (feature, latlng) {
       return L.marker(latlng, {
         icon: L.divIcon({
@@ -92,13 +91,16 @@ function drawFeatures() {
       })
       layer.on('mouseover', function (e) {
         document.getElementById(station).classList.add('highlight')
-      })
+      }).openTooltip()
+
       layer.on('click', function (e) {
         map.flyTo(e.latlng, 10)
+        //toggleAccordion(station)
       })
+
       layer.on('mouseout', function (e) {
         document.getElementById(station).classList.remove('highlight')
-      })
+      }).closeTooltip()
 
     } // end onEachFeature
     
@@ -108,7 +110,7 @@ function drawFeatures() {
     padding: [20, 20]
   })
 
-  // switched to using jquery because ... just easier
+  // switched to using jquery because ... it's just easier :/
   $('.accordion-button').on('mouseover', function() {
     let sidebarID = this.id.replace('station-', '')
     highlightIcon(sidebarID)
@@ -118,7 +120,7 @@ function drawFeatures() {
     $(this).attr('id', `${childID}`)
     $(this).removeClass('buoy-highlight')
     $('.leaflet-marker-icon').removeClass('buoy-highlight')
-    $(".leaflet-tooltip").css("display","none")
+    $('.leaflet-tooltip').css('visibility','hidden')
   })
 
   function highlightIcon(sidebarID) {
@@ -126,13 +128,27 @@ function drawFeatures() {
       const stationID = layer.feature.properties.station
       if (stationID === sidebarID) {
         $(`.${stationID}`).addClass('buoy-highlight')
-        let tooltip = 'Buoy ID: ' + layer.feature.properties.station
+        let tooltip = 'Buoy ID: ' + stationID
         layer.bindTooltip(tooltip, {
           className: 'tooltip'
         }).openTooltip()
       } 
     })
-    
   }
+
+  // function toggleAccordion(station) {
+  //   $('.accordion-button').each(function() {
+  //     const aID = this.id.replace('station-', '')
+      
+  //     if ( aID === station ) {
+  //       const toggleItem = $(aID).hasClass(station)
+  //       console.log(toggleItem)
+  //       //$('.accordion-collapse').toggle()
+  //     } else {
+        
+  //     }
+  //   })
+  // }
+
 
 } // end drawFeatures function
