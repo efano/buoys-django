@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 22 22"
+   version="1.1"
+   id="svg96"
+   sodipodi:docname="buoy.svg"
+   inkscape:version="1.2-alpha1 (b6a15bb, 2022-02-23)"
+   width="22"
+   height="22"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs100" />
+  <sodipodi:namedview
+     id="namedview98"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="25.692308"
+     inkscape:cx="1.8877245"
+     inkscape:cy="9.4970059"
+     inkscape:window-width="1715"
+     inkscape:window-height="1002"
+     inkscape:window-x="3"
+     inkscape:window-y="38"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg96" />
+  <path
+     d="m 2,19 c -0.49,0.417 -0.99,0.7925 -2,0.9375 v 2 C 1.01,21.7925 1.51,21.417 2,21 c 0.887,0.754 2.167,1 3,1 0.833,0 2.113,-0.246 3,-1 0.887,0.754 2.167,1 3,1 0.833,0 2.113,-0.246 3,-1 0.887,0.754 2.167,1 3,1 0.833,0 2.113,-0.246 3,-1 0.579,0.492 1.32,0.743 2,0.875 v -2 C 21.32,19.743 20.579,19.492 20,19 c -0.887,0.754 -2.167,1 -3,1 -0.833,0 -2.113,-0.246 -3,-1 -0.887,0.754 -2.167,1 -3,1 C 10.167,20 8.887,19.754 8,19 7.113,19.754 5.833,20 5,20 4.167,20 2.887,19.754 2,19 Z"
+     id="path8565"
+     style="fill:#52b8e4;fill-opacity:1" />
+  <path
+     d="M 11,0 C 9.35503,0 8,1.3550302 8,3 V 4 H 7 V 6 L 5.21875,14 H 3 c 0,2.314 0.685,3.92925 1.25,4.90625 C 4.525,18.95625 4.776,19 5,19 5.672,19 6.68275,18.813 7.34375,18.25 L 8,17.6875 8.65625,18.25 C 9.31725,18.813 10.328,19 11,19 c 0.672,0 1.68275,-0.187 2.34375,-0.75 L 14,17.6875 14.65625,18.25 C 15.31725,18.813 16.328,19 17,19 17.224,19 17.475,18.95625 17.75,18.90625 18.315,17.92925 19,16.314 19,14 H 16.78125 L 15,6 V 4 H 14 V 3 C 14,1.3550302 12.64497,0 11,0 Z m 0,2 c 0.56503,0 1,0.4349698 1,1 V 4 H 10 V 3 C 10,2.4349698 10.43497,2 11,2 Z M 8.78125,7 h 4.4375 l 1.5625,7 h -7.5625 z"
+     id="path94"
+     style="fill:#d8534e;fill-opacity:1" />
+</svg>

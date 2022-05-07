@@ -1,0 +1,111 @@
+body {
+  font-size: .875rem;
+}
+
+#map { 
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  margin: 0; 
+}
+
+.buoy-marker:hover,
+.buoy-highlight > svg {
+  transform: scale(1.7);
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Navbar
+ */
+
+ .navbar-brand {
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  font-size: 1.5rem;
+}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .spacer {
+  background-color: rgba(255, 255, 255, 0);
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    top: 4rem;
+    z-index: 2000;
+  }
+
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.accordion-button {
+  background-color:#FDFDFB;
+  color: #315D87;
+  font-size: .9rem;
+  padding: .65rem 1rem;
+}
+
+.buoy-name {
+  color: #28ABE0;
+  font-weight: bold;
+}
+
+.highlight {
+  color: #d8534e;
+}
+
+.accordion-button:hover {
+  background-color: #EBEFF3;
+}
+
+.accordion-button:hover :only-child{
+  color: #d8534e;
+}
+
