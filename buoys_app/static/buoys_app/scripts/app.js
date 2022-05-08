@@ -84,20 +84,21 @@ function drawFeatures() {
           </div>
         `
 
-      let tooltip = 'Buoy ID: ' + feature.properties.station
+      let tooltip = ('<div class=tooltip-buoy-text>' + 'Buoy ID: ' +
+      '<span class=tooltip-id>' +  feature.properties.station + '</span></div>')
       layer.bindTooltip(tooltip, {
         className: 'tooltip'
       })
-      layer.on('mouseover', (e) => {
+      layer.on('mouseover', function () {
         document.getElementById(station).classList.add('highlight')
       }).openTooltip()
 
-      layer.on('click', (e) => {
-        map.flyTo(e.latlng, 10)
+      layer.on('click', function () {
+        //map.flyTo(e.latlng, 10)
         toggleAccordion(station)
       })
 
-      layer.on('mouseout', (e) => {
+      layer.on('mouseout', function () {
         document.getElementById(station).classList.remove('highlight')
       }).closeTooltip()
     } 
@@ -109,7 +110,6 @@ function drawFeatures() {
 
   const accBtn = document.querySelectorAll('.accordion-button')
   const leafletMarker = document.querySelectorAll('.leaflet-marker-icon')
-  //const leafletTooltip = document.querySelectorAll('.leaflet-tooltip')
 
   accBtn.forEach((btn) => {
     btn.addEventListener('mouseover', (e) => {
@@ -133,7 +133,8 @@ function drawFeatures() {
       const stationID = layer.feature.properties.station
       if (stationID === sidebarID) {
         $(`.${stationID}`).addClass('buoy-highlight')
-        let tooltip = 'Buoy ID: ' + stationID
+        let tooltip = ('<div class=tooltip-buoy-text>' + 'Buoy ID: ' +
+        '<span class=tooltip-id>' +  layer.feature.properties.station + '</span></div>')
         layer.bindTooltip(tooltip, {
           className: 'tooltip'
         }).openTooltip()
@@ -145,26 +146,18 @@ function drawFeatures() {
     const accBtnName = document.querySelectorAll('.buoy-name')
 
     for(item of accBtnName) {
-      stationString = String(station)
-      itemName = String(item.id)
-      if ( station === itemName ) {
+      if ( station === item.id ) {
 
-        
         // why do number scroll not work?
-        const accItem = document.querySelector(`#${stationString}`)
-        accItem.classList.add('acc-highlight')
+        const accItem = document.getElementById(`${station}`)
+        //accItem.classList.add('acc-highlight')
         accItem.classList.add('acc-item')
-        console.log(accItem)
-       
-        setTimeout(function() {
-          accItem.classList.remove('acc-highlight')
-        }, 3000)
-
-        console.log(accItem)
+        // setTimeout(function() {
+        //   accItem.classList.remove('acc-highlight')
+        // }, 3000)
         accItem.scrollIntoView({ behavior: 'smooth', block: 'start' })
         
-        
-        let collapseElementList = [].slice.call(document.querySelectorAll(`#collapse${stationString}`))
+        let collapseElementList = [].slice.call(document.querySelectorAll(`#collapse${station}`))
         let collapseList = collapseElementList.map(function (collapseEl) {
           return new bootstrap.Collapse(collapseEl)
         })
@@ -172,5 +165,7 @@ function drawFeatures() {
     }
    } 
 
-} // end drawFeatures function
+
+
+}
         

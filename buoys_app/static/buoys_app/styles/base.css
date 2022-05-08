@@ -20,6 +20,17 @@ body {
   vertical-align: text-bottom;
 }
 
+.tooltip-buoy-text {
+  text-transform: capitalize;
+  font-weight: lighter;
+  color: #315D87;
+}
+
+.tooltip-id {
+  font-weight: bold;
+  color:#d8534e;
+}
+
 /*
  * Navbar
  */
