@@ -24,7 +24,6 @@ const geojson = {
   features: jsonFeatures
 }
 
-// svg
 const svgTemplate = `
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" class="buoy-marker" id="buoy-marker">
     <path d="m 2,19 c -0.49,0.417 -0.99,0.7925 -2,0.9375 v 2 C 1.01,21.7925 1.51,21.417 2,21 c 0.887,0.754 2.167,1 3,1 0.833,0 2.113,-0.246 3,-1 0.887,0.754 2.167,1 3,1 0.833,0 2.113,-0.246 3,-1 0.887,0.754 2.167,1 3,1 0.833,0 2.113,-0.246 3,-1 0.579,0.492 1.32,0.743 2,0.875 v -2 C 21.32,19.743 20.579,19.492 20,19 c -0.887,0.754 -2.167,1 -3,1 -0.833,0 -2.113,-0.246 -3,-1 -0.887,0.754 -2.167,1 -3,1 C 10.167,20 8.887,19.754 8,19 7.113,19.754 5.833,20 5,20 4.167,20 2.887,19.754 2,19 Z" id="path8565" style="fill:#52b8e4;fill-opacity:1" />
@@ -71,7 +70,7 @@ function drawFeatures() {
       const sidebarList = document.querySelector('#sidebar-list')
       
       sidebarList.innerHTML += `
-          <div class="accordion-item">
+          <div class="accordion-item ${station}">
             <h2 class="accordion-header" >
               <button id="station-${station}" class="accordion-button collapsed ${station}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${station}" aria-expanded="false" aria-controls="collapse${station}">
                 Buoy ID: &nbsp;<span class="buoy-name" id="${station}"> ${station}</span>
@@ -89,38 +88,44 @@ function drawFeatures() {
       layer.bindTooltip(tooltip, {
         className: 'tooltip'
       })
-      layer.on('mouseover', function (e) {
+      layer.on('mouseover', (e) => {
         document.getElementById(station).classList.add('highlight')
       }).openTooltip()
 
-      layer.on('click', function (e) {
+      layer.on('click', (e) => {
         map.flyTo(e.latlng, 10)
-        //toggleAccordion(station)
+        toggleAccordion(station)
       })
 
-      layer.on('mouseout', function (e) {
+      layer.on('mouseout', (e) => {
         document.getElementById(station).classList.remove('highlight')
       }).closeTooltip()
-
-    } // end onEachFeature
-    
+    } 
   }).addTo(map)
 
   map.fitBounds(dataLayer.getBounds(), {
     padding: [20, 20]
   })
 
-  // switched to using jquery because ... it's just easier :/
-  $('.accordion-button').on('mouseover', function() {
-    let sidebarID = this.id.replace('station-', '')
-    highlightIcon(sidebarID)
-  })
-  $('.accordion-button').on('mouseout', function () {
-    let childID = $(this).attr('id')
-    $(this).attr('id', `${childID}`)
-    $(this).removeClass('buoy-highlight')
-    $('.leaflet-marker-icon').removeClass('buoy-highlight')
-    $('.leaflet-tooltip').css('visibility','hidden')
+  const accBtn = document.querySelectorAll('.accordion-button')
+  const leafletMarker = document.querySelectorAll('.leaflet-marker-icon')
+  //const leafletTooltip = document.querySelectorAll('.leaflet-tooltip')
+
+  accBtn.forEach((btn) => {
+    btn.addEventListener('mouseover', (e) => {
+      let sidebarID = e.currentTarget.id.replace('station-', '')
+      highlightIcon(sidebarID)
+    })
+
+    btn.addEventListener('mouseout', (e) => {
+      e.currentTarget.classList.remove('buoy-highlight')
+
+      leafletMarker.forEach((item) => {
+        item.classList.remove('buoy-highlight')
+      })
+
+      $('.leaflet-tooltip').css('visibility','hidden')
+    })
   })
 
   function highlightIcon(sidebarID) {
@@ -136,19 +141,36 @@ function drawFeatures() {
     })
   }
 
-  // function toggleAccordion(station) {
-  //   $('.accordion-button').each(function() {
-  //     const aID = this.id.replace('station-', '')
-      
-  //     if ( aID === station ) {
-  //       const toggleItem = $(aID).hasClass(station)
-  //       console.log(toggleItem)
-  //       //$('.accordion-collapse').toggle()
-  //     } else {
-        
-  //     }
-  //   })
-  // }
+  function toggleAccordion(station) {
+    const accBtnName = document.querySelectorAll('.buoy-name')
 
+    for(item of accBtnName) {
+      stationString = String(station)
+      itemName = String(item.id)
+      if ( station === itemName ) {
+
+        
+        // why do number scroll not work?
+        const accItem = document.querySelector(`#${stationString}`)
+        accItem.classList.add('acc-highlight')
+        accItem.classList.add('acc-item')
+        console.log(accItem)
+       
+        setTimeout(function() {
+          accItem.classList.remove('acc-highlight')
+        }, 3000)
+
+        console.log(accItem)
+        accItem.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        
+        
+        let collapseElementList = [].slice.call(document.querySelectorAll(`#collapse${stationString}`))
+        let collapseList = collapseElementList.map(function (collapseEl) {
+          return new bootstrap.Collapse(collapseEl)
+        })
+      }
+    }
+   } 
 
 } // end drawFeatures function
+        

@@ -97,15 +97,18 @@ body {
   font-weight: bold;
 }
 
-.highlight {
+.highlight,
+.acc-highlight,
+.accordion-button:hover :only-child {
   color: #d8534e;
+  font-size: 1.1rem;
 }
 
 .accordion-button:hover {
   background-color: #EBEFF3;
 }
 
-.accordion-button:hover :only-child{
-  color: #d8534e;
+.acc-item {
+  scroll-margin-top: 20px;
 }
 
