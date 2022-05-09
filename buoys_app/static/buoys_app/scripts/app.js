@@ -70,7 +70,7 @@ function drawFeatures() {
       const unixTimestamp = feature.properties.time
       const dateObject = new Date(unixTimestamp)
       const obTime = dateObject.toLocaleString("en-US", {timeZoneName: "short"})
-      const  airTempC= layer.feature.properties.air_temperature
+      const airTempC = layer.feature.properties.air_temperature
       const airTempF = (airTempC != null) ? airTempC * 9 / 5 + 32 : null
       const windSpeed = layer.feature.properties.wind_speed
 
@@ -93,7 +93,7 @@ function drawFeatures() {
               <tbody>
                 <tr>
                   <td>Air Temperature: </td>
-                  <td>${airTempF}\xB0F / ${airTempC}\xB0C</td>
+                  <td>${parseFloat(airTempF).toFixed(0)}\xB0F / ${parseFloat(airTempC).toFixed(0)}\xB0C</td>
                 </tr>
                 <tr>
                   <td>Wind Speed:</td>
