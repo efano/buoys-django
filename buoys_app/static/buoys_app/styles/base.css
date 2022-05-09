@@ -67,7 +67,7 @@ body {
   top: 0;
   bottom: 0;
   z-index: 100; /* Behind the navbar */
-  padding: 48px 0 0; /* Height of navbar */
+  padding: 48px 0 0; 
 }
 
 @media (max-width: 768px) {
@@ -75,7 +75,6 @@ body {
     top: 4rem;
     z-index: 2000;
   }
-
 }
 
 .sidebar-sticky {
@@ -83,6 +82,7 @@ body {
   top: 0;
   height: calc(100vh - 48px);
   padding-top: .5rem;
+  /* padding-bottom: 20rem; */
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -123,3 +123,12 @@ body {
   scroll-margin-top: 20px;
 }
 
+tr,
+.accordion-body {
+  color: #315D87;
+  font-size: .8rem;
+}
+
+.table-timestamp {
+  padding-bottom: .5rem;
+}
