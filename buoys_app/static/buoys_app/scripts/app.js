@@ -67,7 +67,15 @@ function drawFeatures() {
     onEachFeature: function (feature, layer) {
       
       const station = feature.properties.station
+      const unixTimestamp = feature.properties.time
+      const dateObject = new Date(unixTimestamp)
+      const obTime = dateObject.toLocaleString("en-US", {timeZoneName: "short"})
+      const  airTempC= layer.feature.properties.air_temperature
+      const airTempF = (airTempC != null) ? airTempC * 9 / 5 + 32 : null
+      const windSpeed = layer.feature.properties.wind_speed
+
       const sidebarList = document.querySelector('#sidebar-list')
+
       
       sidebarList.innerHTML += `
           <div class="accordion-item ${station}">
@@ -78,7 +86,42 @@ function drawFeatures() {
             </h2>
             <div id="collapse${station}" class="accordion-collapse collapse" aria-labelledby="heading${station}">
               <div class="accordion-body">
-                <strong>Current conditions: </strong> It is hidden by default...
+
+              <div class="table-timestamp"><strong>Latest Observation:<br>${obTime}</strong></div>
+
+              <table class="table table-borderless table-sm">
+              <tbody>
+                <tr>
+                  <td>Air Temperature: </td>
+                  <td>${airTempF}\xB0F / ${airTempC}\xB0C</td>
+                </tr>
+                <tr>
+                  <td>Wind Speed:</td>
+                  <td>${windSpeed} kts</td>
+                </tr>
+                <tr>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                </tr>
+                <tr>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                </tr>
+                <tr>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                </tr>
+                <tr>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                </tr>
+                <tr>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                </tr>
+              </tbody>
+            </table>
+                
               </div>
             </div>
           </div>
