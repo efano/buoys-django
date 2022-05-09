@@ -82,7 +82,7 @@ body {
   top: 0;
   height: calc(100vh - 48px);
   padding-top: .5rem;
-  /* padding-bottom: 20rem; */
+  padding-bottom: 20rem;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -123,8 +123,12 @@ body {
   scroll-margin-top: 20px;
 }
 
-tr,
 .accordion-body {
+  color: #315D87;
+  font-size: .8rem;
+}
+
+tr {
   color: #315D87;
   font-size: .8rem;
 }

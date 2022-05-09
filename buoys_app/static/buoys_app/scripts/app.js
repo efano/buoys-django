@@ -70,10 +70,25 @@ function drawFeatures() {
       const unixTimestamp = feature.properties.time
       const dateObject = new Date(unixTimestamp)
       const obTime = dateObject.toLocaleString("en-US", {timeZoneName: "short"})
+      let windDirection = layer.feature.properties.wind_direction
+      windDirection = (windDirection != null) ? windDirection+'\xB0' : 'no data'
+      let windSpeed = layer.feature.properties.wind_speed
+      windSpeed = (windSpeed != null) ? windSpeed+' kts' : 'no data'
+      let pressure = layer.feature.properties.pressure
+      pressure = (pressure != null) ? pressure+' in' : 'no data'
+      let pressureT = layer.feature.properties.pressure_tendency_3hr
+      pressureT = (pressureT != null) ? pressureT+' in' : 'no data'
       const airTempC = layer.feature.properties.air_temperature
-      const airTempF = (airTempC != null) ? airTempC * 9 / 5 + 32 : null
-      const windSpeed = layer.feature.properties.wind_speed
-
+      let airTempCDeg = (airTempC != null) ? airTempC+'\xB0C' : ''
+      const airTempFDeg = (airTempC != null) ? (parseFloat(airTempC * 9 / 5 + 32).toFixed(0))+'\xB0F /' : 'no data'
+      const dewpointC = layer.feature.properties.dewpoint
+      let dewpointCDeg = (dewpointC != null) ? dewpointC+'\xB0C' : ''
+      const dewpointFDeg = (dewpointC != null) ? (parseFloat(dewpointC * 9 / 5 + 32).toFixed(0))+'\xB0F /' : 'no data'
+      const waterTempC = layer.feature.properties.water_temperature
+      let waterTempCDeg = (waterTempC != null) ? waterTempC+'\xB0C' : ''
+      const waterTempFDeg = (waterTempC != null) ? (parseFloat(waterTempC * 9 / 5 + 32).toFixed(0))+'\xB0F /' : 'no data'
+      let waveHeight = layer.feature.properties.wave_height
+      waveHeight = (waveHeight != null) ? waveHeight+' m' : 'no data'
       const sidebarList = document.querySelector('#sidebar-list')
 
       
@@ -91,34 +106,40 @@ function drawFeatures() {
 
               <table class="table table-borderless table-sm">
               <tbody>
+              
                 <tr>
-                  <td>Air Temperature: </td>
-                  <td>${parseFloat(airTempF).toFixed(0)}\xB0F / ${parseFloat(airTempC).toFixed(0)}\xB0C</td>
+                  <td>Wind Direction:</td>
+                  <td>${windDirection}</td>
                 </tr>
                 <tr>
                   <td>Wind Speed:</td>
-                  <td>${windSpeed} kts</td>
+                  <td>${windSpeed}</td>
                 </tr>
                 <tr>
-                  <td>Mark</td>
-                  <td>Otto</td>
+                  <td>Pressure:</td>
+                  <td>${pressure}</td>
                 </tr>
                 <tr>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
+                  <td>3-Hr Pressure Tendency:</td>
+                  <td>${pressureT}</td>
                 </tr>
                 <tr>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
+                  <td>Air Temperature: </td>
+                  <td>${(airTempFDeg)} ${(airTempCDeg)}</td>
                 </tr>
                 <tr>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                </tr>
+                  <td>Dewpoint: </td>
+                  <td>${(dewpointFDeg)} ${(dewpointCDeg)}</td>
+                </tr
                 <tr>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                </tr>
+                  <td>Water Temperature: </td>
+                  <td>${(waterTempFDeg)} ${(waterTempCDeg)}</td>
+                </tr
+                <tr>
+                  <td>Wave Height: </td>
+                  <td>${(waveHeight)}</td>
+                </tr
+              
               </tbody>
             </table>
                 
