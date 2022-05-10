@@ -80,13 +80,13 @@ function drawFeatures() {
       pressureT = (pressureT != null) ? pressureT+' in' : 'no data'
       const airTempC = layer.feature.properties.air_temperature
       let airTempCDeg = (airTempC != null) ? airTempC+'\xB0C' : ''
-      const airTempFDeg = (airTempC != null) ? (parseFloat(airTempC * 9 / 5 + 32).toFixed(0))+'\xB0F /' : 'no data'
+      const airTempFDeg = (airTempC != null) ? (+airTempC * 9 / 5 + 32).toFixed(1)+'\xB0F /' : 'no data'
       const dewpointC = layer.feature.properties.dewpoint
       let dewpointCDeg = (dewpointC != null) ? dewpointC+'\xB0C' : ''
-      const dewpointFDeg = (dewpointC != null) ? (parseFloat(dewpointC * 9 / 5 + 32).toFixed(0))+'\xB0F /' : 'no data'
+      const dewpointFDeg = (dewpointC != null) ? (+dewpointC * 9 / 5 + 32).toFixed(1)+'\xB0F /' : 'no data'
       const waterTempC = layer.feature.properties.water_temperature
       let waterTempCDeg = (waterTempC != null) ? waterTempC+'\xB0C' : ''
-      const waterTempFDeg = (waterTempC != null) ? (parseFloat(waterTempC * 9 / 5 + 32).toFixed(0))+'\xB0F /' : 'no data'
+      const waterTempFDeg = (waterTempC != null) ? (+waterTempC * 9 / 5 + 32).toFixed(1)+'\xB0F /' : 'no data'
       let waveHeight = layer.feature.properties.wave_height
       waveHeight = (waveHeight != null) ? waveHeight+' m' : 'no data'
       const sidebarList = document.querySelector('#sidebar-list')
@@ -102,42 +102,43 @@ function drawFeatures() {
             <div id="collapse${station}" class="accordion-collapse collapse" aria-labelledby="heading${station}">
               <div class="accordion-body">
 
-              <div class="table-timestamp"><strong>Latest Observation:<br>${obTime}</strong></div>
+              <div>Latest Observation:</div>
+              <div class="table-timestamp">${obTime}</div>
 
               <table class="table table-borderless table-sm">
               <tbody>
               
                 <tr>
                   <td>Wind Direction:</td>
-                  <td>${windDirection}</td>
+                  <td class="table-data">${windDirection}</td>
                 </tr>
                 <tr>
                   <td>Wind Speed:</td>
-                  <td>${windSpeed}</td>
+                  <td  class="table-data">${windSpeed}</td>
                 </tr>
                 <tr>
                   <td>Pressure:</td>
-                  <td>${pressure}</td>
+                  <td  class="table-data">${pressure}</td>
                 </tr>
                 <tr>
                   <td>3-Hr Pressure Tendency:</td>
-                  <td>${pressureT}</td>
+                  <td  class="table-data">${pressureT}</td>
                 </tr>
                 <tr>
                   <td>Air Temperature: </td>
-                  <td>${(airTempFDeg)} ${(airTempCDeg)}</td>
+                  <td  class="table-data">${(airTempFDeg)} ${(airTempCDeg)}</td>
                 </tr>
                 <tr>
                   <td>Dewpoint: </td>
-                  <td>${(dewpointFDeg)} ${(dewpointCDeg)}</td>
+                  <td  class="table-data">${(dewpointFDeg)} ${(dewpointCDeg)}</td>
                 </tr
                 <tr>
                   <td>Water Temperature: </td>
-                  <td>${(waterTempFDeg)} ${(waterTempCDeg)}</td>
+                  <td  class="table-data">${(waterTempFDeg)} ${(waterTempCDeg)}</td>
                 </tr
                 <tr>
                   <td>Wave Height: </td>
-                  <td>${(waveHeight)}</td>
+                  <td  class="table-data">${(waveHeight)}</td>
                 </tr
               
               </tbody>

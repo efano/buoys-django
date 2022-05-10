@@ -134,5 +134,10 @@ tr {
 }
 
 .table-timestamp {
+  font-weight: 500;
   padding-bottom: .5rem;
+}
+
+.table-data {
+  font-weight: 500;
 }
