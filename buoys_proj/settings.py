@@ -32,13 +32,13 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'buoys_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'buoys_app'
 ]
 
 MIDDLEWARE = [
@@ -128,4 +128,9 @@ STATICFILES_DIRS = (os.path.join('static'), )
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SITE_URL = "http://127.0.0.1:8000"
+SITE_URL = 'http://127.0.0.1:8000'
+
+# users will be redirected to the index after login
+LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/index/'
+
+LOGOUT_REDIRECT_URL = 'login'

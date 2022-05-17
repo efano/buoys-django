@@ -46,16 +46,22 @@ body {
   right: 1rem;
 }
 
-.nav-link {
+.nav-user {
+  font-size: 13px;
+  line-height: 22px;
   font-weight: 500;
-  color: #333;
+  text-transform: uppercase;
+  display: block;
+  padding: 0.5rem 0.9rem;
+  color: #fff;
+  text-decoration: none;
 }
+
+
 
 /*
  * Sidebar
  */
-
-
 
 .sidebar {
   position: fixed;

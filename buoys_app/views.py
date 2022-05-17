@@ -4,6 +4,7 @@ import pandas as pd
 import json
 from siphon.simplewebservice.ndbc import NDBC
 import requests
+from .forms import *
 
 
 # get data
@@ -21,15 +22,3 @@ def index(request):
     data = json.loads(json_string)
 
     return render(request, 'buoys_app/index.html', {'data': data})
-
-
-# def map(request):
-#     json_string = df.to_json(orient='records')
-#     data = json.loads(json_string)
-
-#     return render(request, 'buoys_app/map.html', {'data': data})
-
-
-# def sidebar(request):
-
-#     return render(request, 'buoys_app/sidebar.html')
