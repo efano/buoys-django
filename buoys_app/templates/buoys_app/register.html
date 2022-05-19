@@ -39,27 +39,31 @@
 </head>
 
 <body class="bg-light">
+  <div class="row">
+    <div class="col-lg-4 offset-lg-4">
+      <div class="card my-5">
+        <h4 class="card-header my-2"><img src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30"
+            class="d-inline-block align-text-top me-2">Sign Up</h4>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
 
-  <div class="card position-absolute top-0 start-50 translate-middle-x my-5" >
-    <h4 class="card-header my-2"><img src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30"
-      class="d-inline-block align-text-top me-2">Sign Up</h4>
-    <div class="card-body">
-      <form method="POST">
-        {% csrf_token %}
+            {{ register_form|crispy }}
+            {% comment %} <button class="btn btn-primary" type="submit">Register</button> {% endcomment %}
 
-        {{ register_form|crispy }}
-        {% comment %} <button class="btn btn-primary" type="submit">Register</button> {% endcomment %}
-
-        <div class="d-flex align-items-baseline justify-content-between pt-3">
-          <p><small class="text-muted">
-            If you already have an account, <a href="/login">login</a> instead.
-          </small></p>
-          <div>
-            <a type="button" href="../" class="btn btn-sm btn-secondary me-1">Cancel</a>
-            <button type="submit" class="btn btn-sm btn-primary">Sign Up</button>
-          </div>
+            <div class="d-flex align-items-baseline justify-content-between pt-3">
+              <p><small class="text-muted">
+                  If you already have an account, <a href="/login">login</a> instead.
+                </small></p>
+              <div>
+                <a type="button" href="../" class="btn btn-sm btn-secondary m-1">Cancel</a>
+                <button type="submit" class="btn btn-sm btn-primary m-1">Sign Up</button>
+              </div>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
+
     </div>
   </div>
 
