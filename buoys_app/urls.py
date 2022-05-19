@@ -1,10 +1,11 @@
 from django.urls import path
-from .import views
+from . import views
 
 
 app_name = 'buoys_app'
 urlpatterns = [
 
     path('', views.index, name='index'),
+    path('register/', views.register_request, name='register')
 
 ]

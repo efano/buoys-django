@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import pandas as pd
 import json
 from siphon.simplewebservice.ndbc import NDBC
 import requests
 from .forms import *
+from django.contrib.auth import login
+from django.contrib import messages
 
 
 # get data
@@ -22,3 +24,17 @@ def index(request):
     data = json.loads(json_string)
 
     return render(request, 'buoys_app/index.html', {'data': data})
+
+
+def register_request(request):
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Registration successful.')
+            return redirect('/index/')
+        messages.error(
+            request, 'Unsuccessful registration. Invalid information.')
+    form = NewUserForm()
+    return render(request=request, template_name='buoys_app/register.html', context={'register_form': form})
