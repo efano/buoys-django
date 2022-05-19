@@ -8,7 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="{% static 'buoys_app/images/buoy.svg' %}">
-  <title>Great Lakes Buoys Signup</title>
+  <title>Great Lakes Buoys Login</title>
 
   <link rel="stylesheet" href="{% static 'buoys_app/styles/bootstrap.min.css' %}">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
@@ -43,20 +43,20 @@
     <div class="col-lg-4 offset-lg-4">
       <div class="card my-5">
         <h4 class="card-header py-3"><img src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30"
-            class="d-inline-block align-text-top mx-2">Sign Up</h4>
-        <div class="card-body p-4">
+            class="d-inline-block align-text-top me-2">Log In</h4>
+        <div class="card-body">
           <form method="POST">
             {% csrf_token %}
 
-            {{ register_form|crispy }}
+            {{ login_form|crispy }}
             
             <div class="d-flex align-items-baseline justify-content-between pt-3">
               <p><small class="text-muted">
-                  If you already have an account, <a href="../login">login</a> instead.
+                Don't have an account? <a href="../register">Create an account</a>.
                 </small></p>
               <div>
                 <a type="button" href="../" class="btn btn-sm btn-secondary m-1">Cancel</a>
-                <button type="submit" class="btn btn-sm btn-primary m-1">Sign Up</button>
+                <button type="submit" class="btn btn-sm btn-primary m-1">Log In</button>
               </div>
             </div>
           </form>
