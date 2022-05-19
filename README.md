@@ -12,7 +12,7 @@ The technology stack for this application includes Django/Python/HTML/SVG/CSS/JS
 
 ### Functionality
 
-At full-size, the layout of the application comprises of a navigational bar at the top of the application, a sidebar, and an interactive slippy map taking up the rest of the display.  All elements are developed following the responsive web design (RWD) approach to render well on a variety of devices and window or screen sizes. Modals will be used for user login and blog editing.
+At full-size, the layout of the application comprises of a navigational bar at the top of the application, a sidebar, and an interactive slippy map taking up the rest of the display.  All elements are developed following the responsive web design (RWD) approach to render well on a variety of devices and window or screen sizes. 
 
 ### Data Model
 
@@ -32,13 +32,11 @@ Stored data will include user login credentials, and a messages model, as taught
 #### Week 2
 
 - [ ] continue with building frontend user affordance between the map and sidebar
-- [ ] build login models (backend)
-- [ ] build login forms and modals (frontend)
+- [ ] build login and signup forms (backend and frontend)
 
 #### Week 3
 
-- [ ] build twitter-like models (backend)
-- [ ] build twitter-like forms and modals (frontend)
+- [ ] build twitter-like forms (backend and frontend)
 - [ ] finalize styling
 - [ ] hosting and deployment (?)
 
