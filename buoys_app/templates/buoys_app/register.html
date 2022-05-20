@@ -23,16 +23,28 @@
     integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 
   <style>
+    .card-header {
+      color: #fff;
+    }
+
+    .card-body {
+      color: #315D87;
+    }
+
+    .text-muted {
+      color: #638FB9 !important;
+    }
+
     .footer {
       justify-content: space-between;
     }
 
     a {
-      color: #1BA9E2;
+      color: #E27E77;
     }
 
     a:hover {
-      color: #2491BE;
+      color: #D8534E
     }
   </style>
 
@@ -42,7 +54,7 @@
   <div class="row">
     <div class="col-lg-4 offset-lg-4">
       <div class="card my-5">
-        <h4 class="card-header py-3"><img src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30"
+        <h4 class="card-header py-3" style="background-color: #315D87;"><img src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30"
             class="d-inline-block align-text-top mx-2">Sign Up</h4>
         <div class="card-body p-4">
           <form method="POST">
@@ -52,10 +64,10 @@
             
             <div class="d-flex align-items-baseline justify-content-between pt-3">
               <p><small class="text-muted">
-                  If you already have an account, <a href="../login">login</a> instead.
+                  If you already have an account, <a href="{% url 'buoys_app:login' %}">login</a> instead.
                 </small></p>
               <div>
-                <a type="button" href="../" class="btn btn-sm btn-secondary m-1">Cancel</a>
+                <a type="button" href="{% url 'buoys_app:index' %}" class="btn btn-sm btn-secondary m-1">Cancel</a>
                 <button type="submit" class="btn btn-sm btn-primary m-1">Sign Up</button>
               </div>
             </div>

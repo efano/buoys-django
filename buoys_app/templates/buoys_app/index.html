@@ -39,21 +39,19 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    {% comment %} <div class="navbar-nav d-flex flex-row text-nowrap">
+    <div class="navbar-nav d-flex flex-row text-nowrap">
       {% if user.is_authenticated %}
-        <span class="nav-user px-3">Hello, {{ user.username|default:'Guest' }}</span>
-        <a class="nav-link px-3" href="{% url 'logout' %}">Logout</a>
+        <span class="nav-user px-3" href="#">Hello, {{ user.username|default:'Guest' }}</span>
+        <a class="nav-link px-3" href="{% url 'buoys_app:logout' %}">Logout</a>
         
       {% else %}
-        <a class="nav-link px-3" href="{% url 'login' %}">Login</a>
+        <a class="nav-link px-3" href="{% url 'buoys_app:login' %}">Login</a>
         
-      {% endif %} {% endcomment %}
+      {% endif %}
 
        
       
-    {% comment %} <a class="nav-link px-3" href="{% url 'signup' %}">Sign up</a> {% endcomment %}
-
-    {% comment %} </div> {% endcomment %}
+    
   </header>
 
   <!-- sidebar -->
