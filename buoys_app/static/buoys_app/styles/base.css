@@ -2,35 +2,6 @@ body {
   font-size: .875rem;
 }
 
-#map { 
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: .5rem;
-  margin: 0; 
-}
-
-.buoy-marker:hover,
-.buoy-highlight > svg {
-  transform: scale(1.7);
-}
-
-.feather {
-  width: 16px;
-  height: 16px;
-  vertical-align: text-bottom;
-}
-
-.tooltip-buoy-text {
-  text-transform: capitalize;
-  font-weight: lighter;
-  color: #315D87;
-}
-
-.tooltip-id {
-  font-weight: bold;
-  color:#d8534e;
-}
-
 /*
  * Navbar
  */
@@ -39,12 +10,14 @@ body {
   padding-top: .5rem;
   padding-bottom: .5rem;
   font-size: 1.5rem;
+  letter-spacing: 0.01em;
 }
 
 .navbar .navbar-toggler {
-  top: .25rem;
+  top: .3rem;
   right: 1rem;
 }
+
 
 .nav-user {
   font-size: 13px;
@@ -56,7 +29,6 @@ body {
   color: #fff;
   text-decoration: none;
 }
-
 
 
 /*
@@ -138,9 +110,46 @@ tr {
   font-weight: 500;
 }
 
-@media (max-width: 767px) {
+/*
+ * Map
+ */
+
+#map { 
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  margin: 0; 
+}
+
+.buoy-marker:hover,
+.buoy-highlight > svg {
+  transform: scale(1.7);
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+.tooltip-buoy-text {
+  text-transform: capitalize;
+  font-weight: lighter;
+  color: #315D87;
+}
+
+.tooltip-id {
+  font-weight: bold;
+  color:#d8534e;
+}
+
+/*
+ * Media Queries
+ */
+
+ @media (max-width: 767px) {
   .sidebar {
-    top: 3.5rem;
+    top: 5.5rem;
     padding-top: 0;
     z-index: 2000;
   }
@@ -148,8 +157,11 @@ tr {
   .sidebar-sticky {
     padding-top: 0;
   }
+}
 
-  .navbar-nav {
-    padding-right: 80px;
+@media (max-width: 574px) {
+  .navbar {
+    justify-content: flex-start;
+    align-items: center;
   }
 }

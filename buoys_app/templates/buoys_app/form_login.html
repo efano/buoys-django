@@ -1,0 +1,31 @@
+{% extends 'buoys_app/form_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block form %}
+
+<h4 class="card-header py-3" style="background-color: #315D87;"><img
+  src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30"
+  class="d-inline-block align-text-top me-2">Log In</h4>
+<div class="card-body">
+  <form method="POST">
+    {% csrf_token %}
+
+    {{ login_form|crispy }}
+
+    <div class="d-flex flex-wrap align-items-baseline justify-content-between pt-3">
+      <div class="me-4">
+        <p><small class="text-muted">
+            Don't have an account? <a href="{% url 'buoys_app:register' %}">Create an account</a>.
+          </small></p>
+      </div>
+      <div>
+        <a type="button" href="{% url 'buoys_app:index' %}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Log In</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
+          

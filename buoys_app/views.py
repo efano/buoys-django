@@ -39,7 +39,7 @@ def register_request(request):
         messages.error(
             request, 'Unsuccessful registration. Invalid information.')
     form = NewUserForm()
-    return render(request, 'buoys_app/register.html', {'register_form': form})
+    return render(request, 'buoys_app/form_register.html', {'register_form': form})
 
 
 def login_request(request):
@@ -58,7 +58,7 @@ def login_request(request):
         else:
             messages.error(request, 'Invalid username or password.')
     form = AuthenticationForm()
-    return render(request, 'buoys_app/login.html', {'login_form': form})
+    return render(request, 'buoys_app/form_login.html', {'login_form': form})
 
 
 def logout_request(request):
