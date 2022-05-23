@@ -55,9 +55,8 @@
   </header>
 
   <!-- sidebar -->
-  <template class="comments-header">
-    <div class="comments-title">Comments:</div>
-    {% comment %} {% if user.is_authenticated %}
+  {% comment %} <template class="comments-header">
+    {% if user.is_authenticated %}
       <div class="d-flex justify-content-between align-items-start pb-0">
         <div class="comments-title">Comments:</div>
         <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
@@ -81,8 +80,8 @@
         <div class="comments-title">Comments:</div>
       </div>
       <hr>
-    {% endif %} {% endcomment %}
-  </template>
+    {% endif %}
+  </template> {% endcomment %}
 
   <div class="container-fluid">
     <div class="row">

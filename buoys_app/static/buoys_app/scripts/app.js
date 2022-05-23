@@ -93,7 +93,7 @@ function drawFeatures() {
       let waveHeight = layer.feature.properties.wave_height
       waveHeight = (waveHeight != null) ? waveHeight + ' m' : 'no data'
       const sidebarList = document.querySelector('#sidebar-list')
-      const commentsHeader = document.querySelector('.comments-header').innerHTML
+      //const commentsHeader = document.querySelector('.comments-header').innerHTML
 
       sidebarList.innerHTML += `
           <div class="accordion-item acc-${station}" id="acc-${station}">
@@ -141,13 +141,10 @@ function drawFeatures() {
                     <tr>
                       <td>Wave Height: </td>
                       <td  class="table-data">${(waveHeight)}</td>
-                    </tr
+                    </tr>
                   </tbody>
                </table>
-               <hr/>
-                 ${(commentsHeader)}
-      
-              
+               <hr>      
               </div>
             </div>
           </div>
@@ -202,7 +199,6 @@ function drawFeatures() {
       const stationID = layer.feature.properties.station
       if (stationID === sidebarID) {
         $(`.${sidebarID}`).addClass('buoy-highlight')
-        //$(`#collapse${sidebarID}`).addClass('buoy-highlight')
         let tooltip = ('<div class=tooltip-buoy-text>' + 'Buoy ID: ' +
           '<span class=tooltip-id>' + layer.feature.properties.station + '</span></div>')
         layer.bindTooltip(tooltip, {
