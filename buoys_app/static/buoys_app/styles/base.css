@@ -91,13 +91,17 @@ body {
   scroll-margin-top: 20px;
 }
 
-.accordion-body {
+.accordion-body,
+.comments-input,
+tr {
   color: #315D87;
   font-size: .8rem;
 }
 
-tr {
-  color: #315D87;
+.input-group-sm>.btn, 
+.input-group-sm>.form-control, 
+.input-group-sm>.form-select, 
+.input-group-sm>.input-group-text {
   font-size: .8rem;
 }
 
@@ -109,6 +113,23 @@ tr {
 .table-data {
   font-weight: 500;
 }
+
+.comments-title {
+  font-weight: 500;
+}
+
+.btn-comments {
+  text-decoration: none;
+}
+
+.comments-icon {
+  color: #E27E77;
+}
+
+.comments-icon:hover {
+  color: #D8534E;
+}
+
 
 /*
  * Map

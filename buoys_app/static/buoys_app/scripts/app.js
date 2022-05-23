@@ -50,6 +50,7 @@ map.addControl(L.control.zoom({
 }))
 
 drawFeatures()
+
 function drawFeatures() {
 
   const dataLayer = L.geoJson(geojson, {
@@ -65,92 +66,95 @@ function drawFeatures() {
       })
     },
     onEachFeature: function (feature, layer) {
-      
+
       const station = feature.properties.station
       const unixTimestamp = feature.properties.time
       const dateObject = new Date(unixTimestamp)
-      const obTime = dateObject.toLocaleString("en-US", {timeZoneName: "short"})
+      const obTime = dateObject.toLocaleString("en-US", {
+        timeZoneName: "short"
+      })
       let windDirection = layer.feature.properties.wind_direction
-      windDirection = (windDirection != null) ? windDirection+'\xB0' : 'no data'
+      windDirection = (windDirection != null) ? windDirection + '\xB0' : 'no data'
       let windSpeed = layer.feature.properties.wind_speed
-      windSpeed = (windSpeed != null) ? windSpeed+' kts' : 'no data'
+      windSpeed = (windSpeed != null) ? windSpeed + ' kts' : 'no data'
       let pressure = layer.feature.properties.pressure
-      pressure = (pressure != null) ? pressure+' in' : 'no data'
+      pressure = (pressure != null) ? pressure + ' in' : 'no data'
       let pressureT = layer.feature.properties.pressure_tendency_3hr
-      pressureT = (pressureT != null) ? pressureT+' in' : 'no data'
+      pressureT = (pressureT != null) ? pressureT + ' in' : 'no data'
       const airTempC = layer.feature.properties.air_temperature
-      let airTempCDeg = (airTempC != null) ? airTempC+'\xB0C' : ''
-      const airTempFDeg = (airTempC != null) ? (+airTempC * 9 / 5 + 32).toFixed(1)+'\xB0F /' : 'no data'
+      let airTempCDeg = (airTempC != null) ? airTempC + '\xB0C' : ''
+      const airTempFDeg = (airTempC != null) ? (+airTempC * 9 / 5 + 32).toFixed(1) + '\xB0F /' : 'no data'
       const dewpointC = layer.feature.properties.dewpoint
-      let dewpointCDeg = (dewpointC != null) ? dewpointC+'\xB0C' : ''
-      const dewpointFDeg = (dewpointC != null) ? (+dewpointC * 9 / 5 + 32).toFixed(1)+'\xB0F /' : 'no data'
+      let dewpointCDeg = (dewpointC != null) ? dewpointC + '\xB0C' : ''
+      const dewpointFDeg = (dewpointC != null) ? (+dewpointC * 9 / 5 + 32).toFixed(1) + '\xB0F /' : 'no data'
       const waterTempC = layer.feature.properties.water_temperature
-      let waterTempCDeg = (waterTempC != null) ? waterTempC+'\xB0C' : ''
-      const waterTempFDeg = (waterTempC != null) ? (+waterTempC * 9 / 5 + 32).toFixed(1)+'\xB0F /' : 'no data'
+      let waterTempCDeg = (waterTempC != null) ? waterTempC + '\xB0C' : ''
+      const waterTempFDeg = (waterTempC != null) ? (+waterTempC * 9 / 5 + 32).toFixed(1) + '\xB0F /' : 'no data'
       let waveHeight = layer.feature.properties.wave_height
-      waveHeight = (waveHeight != null) ? waveHeight+' m' : 'no data'
+      waveHeight = (waveHeight != null) ? waveHeight + ' m' : 'no data'
       const sidebarList = document.querySelector('#sidebar-list')
+      const commentsHeader = document.querySelector('.comments-header').innerHTML
 
-      
       sidebarList.innerHTML += `
-          <div class="accordion-item ${station}">
+          <div class="accordion-item acc-${station}" id="acc-${station}">
+          
             <h2 class="accordion-header" >
               <button id="station-${station}" class="accordion-button collapsed ${station}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${station}" aria-expanded="false" aria-controls="collapse${station}">
                 Buoy ID: &nbsp;<span class="buoy-name" id="${station}"> ${station}</span>
               </button>
             </h2>
+
             <div id="collapse${station}" class="accordion-collapse collapse" aria-labelledby="heading${station}">
               <div class="accordion-body">
-
-              <div>Latest Observation:</div>
-              <div class="table-timestamp">${obTime}</div>
-
-              <table class="table table-borderless table-sm">
-              <tbody>
+                <div>Latest Observation:</div>
+                <div class="table-timestamp">${obTime}</div>
+                <table class="table table-borderless table-sm">
+                  <tbody>
+                    <tr>
+                      <td>Wind Direction:</td>
+                      <td class="table-data">${windDirection}</td>
+                    </tr>
+                    <tr>
+                      <td>Wind Speed:</td>
+                      <td  class="table-data">${windSpeed}</td>
+                    </tr>
+                    <tr>
+                      <td>Pressure:</td>
+                      <td  class="table-data">${pressure}</td>
+                    </tr>
+                    <tr>
+                      <td>3-Hr Pressure Tendency:</td>
+                      <td  class="table-data">${pressureT}</td>
+                    </tr>
+                    <tr>
+                      <td>Air Temperature: </td>
+                      <td  class="table-data">${(airTempFDeg)} ${(airTempCDeg)}</td>
+                    </tr>
+                    <tr>
+                      <td>Dewpoint: </td>
+                      <td  class="table-data">${(dewpointFDeg)} ${(dewpointCDeg)}</td>
+                    </tr
+                    <tr>
+                      <td>Water Temperature: </td>
+                      <td  class="table-data">${(waterTempFDeg)} ${(waterTempCDeg)}</td>
+                    </tr
+                    <tr>
+                      <td>Wave Height: </td>
+                      <td  class="table-data">${(waveHeight)}</td>
+                    </tr
+                  </tbody>
+               </table>
+               <hr/>
+                 ${(commentsHeader)}
+      
               
-                <tr>
-                  <td>Wind Direction:</td>
-                  <td class="table-data">${windDirection}</td>
-                </tr>
-                <tr>
-                  <td>Wind Speed:</td>
-                  <td  class="table-data">${windSpeed}</td>
-                </tr>
-                <tr>
-                  <td>Pressure:</td>
-                  <td  class="table-data">${pressure}</td>
-                </tr>
-                <tr>
-                  <td>3-Hr Pressure Tendency:</td>
-                  <td  class="table-data">${pressureT}</td>
-                </tr>
-                <tr>
-                  <td>Air Temperature: </td>
-                  <td  class="table-data">${(airTempFDeg)} ${(airTempCDeg)}</td>
-                </tr>
-                <tr>
-                  <td>Dewpoint: </td>
-                  <td  class="table-data">${(dewpointFDeg)} ${(dewpointCDeg)}</td>
-                </tr
-                <tr>
-                  <td>Water Temperature: </td>
-                  <td  class="table-data">${(waterTempFDeg)} ${(waterTempCDeg)}</td>
-                </tr
-                <tr>
-                  <td>Wave Height: </td>
-                  <td  class="table-data">${(waveHeight)}</td>
-                </tr
-              
-              </tbody>
-            </table>
-                
               </div>
             </div>
           </div>
         `
 
       let tooltip = ('<div class=tooltip-buoy-text>' + 'Buoy ID: ' +
-      '<span class=tooltip-id>' +  feature.properties.station + '</span></div>')
+        '<span class=tooltip-id>' + feature.properties.station + '</span></div>')
       layer.bindTooltip(tooltip, {
         className: 'tooltip'
       })
@@ -160,26 +164,26 @@ function drawFeatures() {
 
       layer.on('click', function () {
         //map.flyTo(e.latlng, 10)
-        toggleAccordion(station)
+        scrollAccordion(station)
       })
 
       layer.on('mouseout', function () {
         document.getElementById(station).classList.remove('highlight')
       }).closeTooltip()
-    } 
+    }
   }).addTo(map)
 
   map.fitBounds(dataLayer.getBounds(), {
     padding: [20, 20]
   })
 
-  const accBtn = document.querySelectorAll('.accordion-button')
+  const accItem = document.querySelectorAll('.accordion-item')
   const leafletMarker = document.querySelectorAll('.leaflet-marker-icon')
 
-  accBtn.forEach((btn) => {
+  accItem.forEach((btn) => {
     btn.addEventListener('mouseover', (e) => {
-      let sidebarID = e.currentTarget.id.replace('station-', '')
-      highlightIcon(sidebarID)
+      let sidebarID = e.currentTarget.id.replace('acc-', '')
+      highlightBuoyIcon(sidebarID)
     })
 
     btn.addEventListener('mouseout', (e) => {
@@ -189,48 +193,46 @@ function drawFeatures() {
         item.classList.remove('buoy-highlight')
       })
 
-      $('.leaflet-tooltip').css('visibility','hidden')
+      $('.leaflet-tooltip').css('visibility', 'hidden')
     })
   })
 
-  function highlightIcon(sidebarID) {
-    dataLayer.eachLayer(function(layer) {
+  function highlightBuoyIcon(sidebarID) {
+    dataLayer.eachLayer(function (layer) {
       const stationID = layer.feature.properties.station
       if (stationID === sidebarID) {
-        $(`.${stationID}`).addClass('buoy-highlight')
+        $(`.${sidebarID}`).addClass('buoy-highlight')
+        //$(`#collapse${sidebarID}`).addClass('buoy-highlight')
         let tooltip = ('<div class=tooltip-buoy-text>' + 'Buoy ID: ' +
-        '<span class=tooltip-id>' +  layer.feature.properties.station + '</span></div>')
+          '<span class=tooltip-id>' + layer.feature.properties.station + '</span></div>')
         layer.bindTooltip(tooltip, {
           className: 'tooltip'
         }).openTooltip()
-      } 
+      }
     })
   }
 
-  function toggleAccordion(station) {
+  function scrollAccordion(station) {
     const accBtnName = document.querySelectorAll('.buoy-name')
 
-    for(item of accBtnName) {
-      if ( station === item.id ) {
+    for (item of accBtnName) {
+      if (station === item.id) {
 
-        // why do number scroll not work?
         const accItem = document.getElementById(`${station}`)
-        //accItem.classList.add('acc-highlight')
         accItem.classList.add('acc-item')
-        // setTimeout(function() {
-        //   accItem.classList.remove('acc-highlight')
-        // }, 3000)
-        accItem.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        
+        accItem.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        })
+
         let collapseElementList = [].slice.call(document.querySelectorAll(`#collapse${station}`))
         let collapseList = collapseElementList.map(function (collapseEl) {
           return new bootstrap.Collapse(collapseEl)
         })
       }
     }
-   } 
+  }
 
 
 
 }
-        

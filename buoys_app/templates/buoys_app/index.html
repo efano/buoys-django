@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="{% static 'buoys_app/images/buoy.svg' %}">
-  <title>Great Lakes Buoys Support Tracker</title>
+  <title>Great Lakes Buoys Status Tracker</title>
 
   <link rel="stylesheet" href="{% static 'buoys_app/styles/bootstrap.min.css' %}">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
@@ -30,7 +30,7 @@
     <a class="navbar-brand col-md-3 col-lg-2 me-5 px-3" href="#">
       <img src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30"
         class="d-inline-block align-text-top">
-      Great Lakes Buoys Support Tracker
+      Great Lakes Buoys Status Tracker
     </a>
 
     <div class="d-flex">
@@ -55,14 +55,45 @@
   </header>
 
   <!-- sidebar -->
+  <template class="comments-header">
+    <div class="comments-title">Comments:</div>
+    {% comment %} {% if user.is_authenticated %}
+      <div class="d-flex justify-content-between align-items-start pb-0">
+        <div class="comments-title">Comments:</div>
+        <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
+          <div class="comments-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
+              <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+            </svg>
+            <span>+</span>
+          </div>
+        </button>
+      </div>
+      <hr>
+      <div class="collapse collapse-input" id="collapse-input">
+        <div class="input-group input-group-sm mb-3">
+          <input type="text" class="form-control comments-input" placeholder="Comments" aria-label="Comments" aria-describedby="button-addon2">
+          <button class="btn btn-info" type="button" id="button-addon2">+</button>
+        </div>
+      </div>
+    {% else %} 
+      <div class="d-flex justify-content-between align-items-start">
+        <div class="comments-title">Comments:</div>
+      </div>
+      <hr>
+    {% endif %} {% endcomment %}
+  </template>
+
   <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu" class="col-xxl-2 col-xl-3 col-lg-3 col-md-4 d-md-block bg-light sidebar collapse">
         <div class="sidebar-sticky pt-1">
           <div class="d-flex flex-column ">
-            <div class="accordion" id="sidebar-list"></div>
+            <div class="accordion" id="sidebar-list">
 
+              <!-- sidebarList.innerHTML here -->
 
+            </div>
           </div>
         </div>
       </nav>
