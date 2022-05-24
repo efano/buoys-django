@@ -55,6 +55,29 @@
   </header>
 
   <!-- sidebar -->
+
+  <template class="comments">
+
+    {% if not user.comments.all %}
+      No comments yet...<a href="#"> Add one</a>
+    {% else %}
+      {% for comment in user.comments.all %}
+        <strong>
+          {{ comment.user_agency }} -
+          {{ comment.user }} -
+          {{ comment.published_date }}
+        </strong>
+        <br/> 
+          {{ comment.body }}
+        <br/> 
+        <br/> 
+      {% endfor %}
+    {% endif %}
+
+  </template>
+
+
+
   {% comment %} <template class="comments-header">
     {% if user.is_authenticated %}
       <div class="d-flex justify-content-between align-items-start pb-0">

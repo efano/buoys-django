@@ -93,7 +93,7 @@ function drawFeatures() {
       let waveHeight = layer.feature.properties.wave_height
       waveHeight = (waveHeight != null) ? waveHeight + ' m' : 'no data'
       const sidebarList = document.querySelector('#sidebar-list')
-      //const commentsHeader = document.querySelector('.comments-header').innerHTML
+      const comments = document.querySelector('.comments').innerHTML
 
       sidebarList.innerHTML += `
           <div class="accordion-item acc-${station}" id="acc-${station}">
@@ -144,7 +144,8 @@ function drawFeatures() {
                     </tr>
                   </tbody>
                </table>
-               <hr>      
+               <hr> 
+               <div>${(comments)}</div>     
               </div>
             </div>
           </div>

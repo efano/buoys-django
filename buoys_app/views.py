@@ -16,7 +16,9 @@ df = NDBC.latest_observations()
 
 # set the spatial extent to Great Lakes region
 df = df.loc[df['latitude'].between(40.53, 49.15) & df['longitude'].between(
-    -95.30, -74.36), ['latitude', 'longitude', 'station', 'time', 'wind_direction', 'wind_speed', 'wind_gust', 'wave_height', 'pressure', '3hr_pressure_tendency', 'air_temperature', 'water_temperature', 'dewpoint', 'visibility']].sort_values(by=['station'])
+    -95.30, -74.36), ['latitude', 'longitude', 'station', 'time', 'wind_direction', 'wind_speed',
+                      'wind_gust', 'wave_height', 'pressure', '3hr_pressure_tendency', 'air_temperature', 'water_temperature',
+                      'dewpoint', 'visibility']].sort_values(by=['station'])
 
 df = df.rename(columns={'3hr_pressure_tendency': 'pressure_tendency_3hr'})
 
