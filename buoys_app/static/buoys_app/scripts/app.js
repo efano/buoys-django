@@ -144,7 +144,7 @@ function drawFeatures() {
                     </tr>
                   </tbody>
                </table>
-               <hr> 
+               <hr class="hr-end"> 
                <div>${(comments)}</div>     
               </div>
             </div>
@@ -211,17 +211,14 @@ function drawFeatures() {
 
   function scrollAccordion(station) {
     const accBtnName = document.querySelectorAll('.buoy-name')
-
     for (item of accBtnName) {
       if (station === item.id) {
-
         const accItem = document.getElementById(`${station}`)
         accItem.classList.add('acc-item')
         accItem.scrollIntoView({
           behavior: 'smooth',
           block: 'start'
         })
-
         let collapseElementList = [].slice.call(document.querySelectorAll(`#collapse${station}`))
         let collapseList = collapseElementList.map(function (collapseEl) {
           return new bootstrap.Collapse(collapseEl)

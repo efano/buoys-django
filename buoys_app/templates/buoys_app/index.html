@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
 
 <head>
@@ -27,11 +28,11 @@
 
   <!-- navbar -->
   <header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #315D87;">
-    <a class="navbar-brand col-md-3 col-lg-2 me-5 px-3" href="#">
+    <div class="navbar-brand col-md-3 col-lg-2 me-5 px-3">
       <img src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30"
         class="d-inline-block align-text-top">
       Great Lakes Buoys Status Tracker
-    </a>
+    </div>
 
     <div class="d-flex">
       <button class="navbar-toggler pt-1 d-md-none border-0 collapsed" id="navbarScroll" type="button"
@@ -43,10 +44,14 @@
       <div class="navbar-nav d-flex flex-row text-nowrap">
 
         {% if user.is_authenticated %}
+
           <span class="nav-user px-3" href="#">Hello, {{ user.username|default:'Guest' }}</span>
           <a class="nav-link px-3" href="{% url 'buoys_app:logout' %}">Logout</a>
+
         {% else %}
+
           <a class="nav-link px-3" href="{% url 'buoys_app:login' %}">Login</a>
+
         {% endif %}
 
       </div>
@@ -55,28 +60,128 @@
   </header>
 
   <!-- sidebar -->
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-xxl-2 col-xl-3 col-lg-3 col-md-4 d-md-block bg-light sidebar collapse">
+        <div class="sidebar-sticky pt-1">
+          <div class="d-flex flex-column ">
+            <div class="accordion" id="sidebar-list">
+
+              <!-- sidebarList.innerHTML here -->
+
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
 
   <template class="comments">
 
-    {% if not user.comments.all %}
-      No comments yet...<a href="#"> Add one</a>
-    {% else %}
-      {% for comment in user.comments.all %}
-        <strong>
-          {{ comment.user_agency }} -
-          {{ comment.user }} -
-          {{ comment.published_date }}
-        </strong>
-        <br/> 
-          {{ comment.body }}
-        <br/> 
-        <br/> 
-      {% endfor %}
+    {% if user.is_authenticated %}
+
+      <div class="d-flex justify-content-between align-items-start pb-0">
+        <div class="comments-title mb-4">Comments...</div>
+        <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
+          <div class="comments-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
+              <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+            </svg>
+            <span>+</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="collapse collapse-input" id="collapse-input">
+        
+          {% if not request.user.is_anonymous %}
+
+              <form action="{% url 'buoys_app:new_comment' %}" method="POST">
+                {% csrf_token %}
+  
+                {{ form|crispy }}
+
+              <div class="input-group input-group-sm mb-4 px-0 mx-0">
+                <input type="text" class="form-control comments-input" placeholder="add comment" aria-label="add comment" aria-describedby="button-addon2">
+                <button class="btn btn-primary" type="button" id="button-addon2">+</button>
+              </div>
+            </form>
+
+          {% endif %}
+
+      </div>
+        
+    {% else %} 
+
+        <p class="comments-title mb-3">Comments...</p>
+        {% comment %} <div>No comments yet...&ensp;<a href="{% url 'buoys_app:login' %}">Add one</a></div> {% endcomment %}
+
     {% endif %}
 
+    {% comment %} {% if user.is_authenticated %}
+
+      <div class="d-flex justify-content-between align-items-start pb-0">
+        <div class="comments-title">Comments...</div>
+        <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
+          <div class="comments-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
+              <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+            </svg>
+            <span>+</span>
+          </div>
+        </button>
+      </div> {% endcomment %}
+      
+
+
+
+      {% comment %} <div class="collapse collapse-input" id="collapse-input">
+        <div class="input-group input-group-sm mb-3">
+          {% if not request.user.is_anonymous %}
+          <form action="{% url 'new_comment %}" method="POST">
+              {% csrf_token %}
+              {{form}}
+              <input type="submit" value="Comment" class="form-control comments-input" placeholder="Comments" aria-label="Comments" aria-describedby="button-addon2">
+              <button class="btn btn-primary" type="button" id="button-addon2">+</button>
+          </form>
+          {% endif %}
+          
+        </div>
+      </div> {% endcomment %}
+
+
+
+
+    {% comment %} {% else %} 
+      <div class="d-flex justify-content-between align-items-start">
+        <div class="comments-title">Comments...</div> {% endcomment %}
+        {% comment %} <div>No comments yet...&ensp;<a href="{% url 'buoys_app:login' %}">Add one</a></div> {% endcomment %}
+      {% comment %} </div> {% endcomment %}
+
+    {% comment %} {% endif %} {% endcomment %}
+
+    {% for user in users %}
+
+      {% if not user.comments.all %}
+      <p>No comments yet...</p>
+      <hr>
+      {% else %}
+        
+        {% for comment in user.comments.all %}
+          <p class="fw-bold mb-0">
+            {{ comment.user_agency }} - {{ comment.user }}
+          </p>
+          <small class="text-muted">{{ comment.published_date }}</small>
+          <p class="mb-0">{{ comment.body }}</p>
+          <hr>
+
+        {% endfor %}
+
+      {% endif %}
+
+    {% endfor %}
+
   </template>
-
-
 
   {% comment %} <template class="comments-header">
     {% if user.is_authenticated %}
@@ -101,26 +206,12 @@
     {% else %} 
       <div class="d-flex justify-content-between align-items-start">
         <div class="comments-title">Comments:</div>
+        <div>No comments yet...&ensp;<a href="{% url 'buoys_app:login' %}">Add one</a></div>
+      <hr>
       </div>
       <hr>
     {% endif %}
   </template> {% endcomment %}
-
-  <div class="container-fluid">
-    <div class="row">
-      <nav id="sidebarMenu" class="col-xxl-2 col-xl-3 col-lg-3 col-md-4 d-md-block bg-light sidebar collapse">
-        <div class="sidebar-sticky pt-1">
-          <div class="d-flex flex-column ">
-            <div class="accordion" id="sidebar-list">
-
-              <!-- sidebarList.innerHTML here -->
-
-            </div>
-          </div>
-        </div>
-      </nav>
-    </div>
-  </div>
 
   <!-- map -->
   <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"

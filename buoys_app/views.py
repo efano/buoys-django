@@ -1,14 +1,19 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+import requests
+from .forms import *
+from .models import *
+
 import pandas as pd
 import json
 from siphon.simplewebservice.ndbc import NDBC
-import requests
-from .forms import *
-from django.contrib.auth import login
-from django.contrib.auth import login, authenticate, logout
+
+from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
 
 
 # get data
@@ -26,8 +31,28 @@ df = df.rename(columns={'3hr_pressure_tendency': 'pressure_tendency_3hr'})
 def index(request):
     json_string = df.to_json(orient='records')
     data = json.loads(json_string)
+    User = get_user_model()
+    users = User.objects.all()
+    comments = Comment.objects.all().order_by('-published_date')
 
-    return render(request, 'buoys_app/index.html', {'data': data})
+    return render(request, 'buoys_app/index.html', {
+        'data': data,
+        'users': users,
+        'comments': comments
+    })
+
+
+@login_required
+def new_comment(request):
+    if request.method == 'POST':
+        form = NewCommentForm(request.POST)
+        if form.is_valid():
+            comment = Comment()
+            comment.user = request.user
+            comment.text = form.cleaned_data['text']
+            comment.save()
+
+    return HttpResponseRedirect(reverse('buoys_app/index.html'))
 
 
 def register_request(request):
