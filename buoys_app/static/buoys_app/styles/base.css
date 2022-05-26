@@ -141,11 +141,11 @@ table tr td{
 }
 
 .comments-icon {
-  color: #E27E77;
+  color: #28ABE0;
 }
 
 .comments-icon:hover {
-  color: #D8534E;
+  color: #2491BE;
 }
 
 .text-muted {
@@ -161,6 +161,14 @@ table tr td{
 }
 .form-control::-webkit-input-placeholder {
   color: #315D87;
+}
+
+.delete-icon {
+  color: #D8534E;
+}
+
+.delete-icon:hover {
+  color: #B84642
 }
 
 

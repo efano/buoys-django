@@ -9,28 +9,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="{% static 'buoys_app/images/buoy.svg' %}">
   <title>Great Lakes Buoys Status Tracker</title>
-
   <link rel="stylesheet" href="{% static 'buoys_app/styles/bootstrap.min.css' %}">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
     integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
     crossorigin="" />
   <link rel="stylesheet" href="{% static 'buoys_app/styles/base.css' %}">
-
   <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
   </script> 
   <script defer src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
   <script defer src="{% static 'buoys_app/scripts/app.js' %}"></script>
-
 </head>
 
 <body>
-
   <!-- navbar -->
   <header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow" style="background-color: #315D87;">
     <div class="navbar-brand col-md-3 col-lg-2 me-5 px-3">
-      <img src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30"
-        class="d-inline-block align-text-top">
+      <img src="{% static 'buoys_app/images/buoy.svg' %}" alt="" width="30" height="30" class="d-inline-block align-text-top">
       Great Lakes Buoys Status Tracker
     </div>
 
@@ -42,21 +37,14 @@
       </button>
 
       <div class="navbar-nav d-flex flex-row text-nowrap">
-
         {% if user.is_authenticated %}
-
-          <span class="nav-user px-3" href="#">Hello, {{ user.username|default:'Guest' }}</span>
+          <span class="nav-user px-3" href="#">Hello, {{ user.first_name|default:'Guest' }}</span>
           <a class="nav-link px-3" href="{% url 'buoys_app:logout' %}">Logout</a>
-
         {% else %}
-
           <a class="nav-link px-3" href="{% url 'buoys_app:login' %}">Login</a>
-
         {% endif %}
-
       </div>
     </div>
-    
   </header>
 
   <!-- sidebar -->
@@ -66,9 +54,7 @@
         <div class="sidebar-sticky pt-1">
           <div class="d-flex flex-column ">
             <div class="accordion" id="sidebar-list">
-
               <!-- sidebarList.innerHTML here -->
-
             </div>
           </div>
         </div>
@@ -77,21 +63,20 @@
   </div>
 
   <template class="comments">
-
+    <!-- if user is logged in show comment button and input form-->
     {% if user.is_authenticated %}
-
       <div class="d-flex justify-content-between align-items-start pb-0">
         <div class="comments-title mb-4">Comments...</div>
         <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
           <div class="comments-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
-              <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-fill" viewBox="0 0 16 16">
+              <path id="path2" d="M 2 0 A 2 2 0 0 0 0 2 L 0 10 A 2 2 0 0 0 2 12 L 4.5 12 A 1 1 0 0 1 5.3007812 12.400391 L 7.1992188 14.933594 A 1 1 0 0 0 8.8007812 14.933594 L 10.699219 12.400391 A 1 1 0 0 1 11.5 12 L 14 12 A 2 2 0 0 0 16 10 L 16 2 A 2 2 0 0 0 14 0 L 2 0 z M 7.9316406 2.2363281 A 0.5 0.5 0 0 1 8.4316406 2.7363281 L 8.4316406 5.7363281 L 11.431641 5.7363281 A 0.5 0.5 0 0 1 11.431641 6.7363281 L 8.4316406 6.7363281 L 8.4316406 9.7363281 A 0.5 0.5 0 0 1 7.4316406 9.7363281 L 7.4316406 6.7363281 L 4.4316406 6.7363281 A 0.5 0.5 0 0 1 4.4316406 5.7363281 L 7.4316406 5.7363281 L 7.4316406 2.7363281 A 0.5 0.5 0 0 1 7.9316406 2.2363281 z " />
             </svg>
-            <span>+</span>
           </div>
         </button>
       </div>
 
+      <!-- needs work... -->
       <div class="collapse collapse-input" id="collapse-input">
         
           {% if not request.user.is_anonymous %}
@@ -101,86 +86,52 @@
   
                 {{ form|crispy }}
 
-              <div class="input-group input-group-sm mb-4 px-0 mx-0">
+              <div class="input-group input-group-sm mb-4 mx-0">
                 <input type="text" class="form-control comments-input" placeholder="add comment" aria-label="add comment" aria-describedby="button-addon2">
                 <button class="btn btn-primary" type="button" id="button-addon2">+</button>
               </div>
             </form>
 
           {% endif %}
-
       </div>
-        
     {% else %} 
-
         <p class="comments-title mb-3">Comments...</p>
-        {% comment %} <div>No comments yet...&ensp;<a href="{% url 'buoys_app:login' %}">Add one</a></div> {% endcomment %}
-
     {% endif %}
 
-    {% comment %} {% if user.is_authenticated %}
-
-      <div class="d-flex justify-content-between align-items-start pb-0">
-        <div class="comments-title">Comments...</div>
-        <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
-          <div class="comments-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
-              <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
-            </svg>
-            <span>+</span>
-          </div>
-        </button>
-      </div> {% endcomment %}
-      
-
-
-
-      {% comment %} <div class="collapse collapse-input" id="collapse-input">
-        <div class="input-group input-group-sm mb-3">
-          {% if not request.user.is_anonymous %}
-          <form action="{% url 'new_comment %}" method="POST">
-              {% csrf_token %}
-              {{form}}
-              <input type="submit" value="Comment" class="form-control comments-input" placeholder="Comments" aria-label="Comments" aria-describedby="button-addon2">
-              <button class="btn btn-primary" type="button" id="button-addon2">+</button>
-          </form>
-          {% endif %}
-          
-        </div>
-      </div> {% endcomment %}
-
-
-
-
-    {% comment %} {% else %} 
-      <div class="d-flex justify-content-between align-items-start">
-        <div class="comments-title">Comments...</div> {% endcomment %}
-        {% comment %} <div>No comments yet...&ensp;<a href="{% url 'buoys_app:login' %}">Add one</a></div> {% endcomment %}
-      {% comment %} </div> {% endcomment %}
-
-    {% comment %} {% endif %} {% endcomment %}
-
-    {% for user in users %}
-
-      {% if not user.comments.all %}
+    <!-- if there are no comments for buoy... -->
+    {% if not user.comments.all %}
       <p>No comments yet...</p>
-      <hr>
-      {% else %}
-        
+    {% else %}
+      <!-- else loop through all comments -->
+      {% for user in users %}
         {% for comment in user.comments.all %}
-          <p class="fw-bold mb-0">
-            {{ comment.user_agency }} - {{ comment.user }}
-          </p>
+
+          <!-- add delete button if user's comment -->
+          {% if not request.user == comment.user %}
+            <p class="fw-bold mb-0">
+              {{ user.first_name }}&nbsp;{{ user.last_name }}
+              {% comment %} {{ comment.user_agency }} - {{ user.first_name }}&nbsp;{{ user.last_name }} {% endcomment %}
+            </p>
+          {% else %}
+            <div class="d-flex justify-content-between align-items-end pb-0">
+              <p class="fw-bold mb-0">
+                {{ user.first_name }}&nbsp;{{ user.last_name }} 
+              </p>
+              <button type="button" class="btn btn-link text-nowrap p-0 delete-icon" title="delete comment" data-bs-toggle="" href="#" aria-expanded="false" aria-controls=""">
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              </button>
+            </div>
+          {% endif %}
+        
+
           <small class="text-muted">{{ comment.published_date }}</small>
           <p class="mb-0">{{ comment.body }}</p>
           <hr>
-
         {% endfor %}
-
-      {% endif %}
-
-    {% endfor %}
-
+      {% endfor %}
+    {% endif %}
   </template>
 
   {% comment %} <template class="comments-header">
@@ -213,16 +164,44 @@
     {% endif %}
   </template> {% endcomment %}
 
+  {% comment %} {% if user.is_authenticated %}
+
+      <div class="d-flex justify-content-between align-items-start pb-0">
+        <div class="comments-title">Comments...</div>
+        <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
+          <div class="comments-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
+              <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
+            </svg>
+            <span>+</span>
+          </div>
+        </button>
+      </div> {% endcomment %}
+      
+
+
+
+      {% comment %} <div class="collapse collapse-input" id="collapse-input">
+        <div class="input-group input-group-sm mb-3">
+          {% if not request.user.is_anonymous %}
+          <form action="{% url 'new_comment %}" method="POST">
+              {% csrf_token %}
+              {{form}}
+              <input type="submit" value="Comment" class="form-control comments-input" placeholder="Comments" aria-label="Comments" aria-describedby="button-addon2">
+              <button class="btn btn-primary" type="button" id="button-addon2">+</button>
+          </form>
+          {% endif %}
+          
+        </div>
+      </div> {% endcomment %}
+
   <!-- map -->
   <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
     integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
     crossorigin=""></script>
   <main class="col-xxl-10 col-xl-9 col-lg-9 col-md-8 ms-sm-auto px-0">
     <div id="map"></div>
-
     {{ data|json_script:'data' }}
-
   </main>
-  
 </body>
 </html>
