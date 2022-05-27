@@ -14,6 +14,7 @@ from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_list_or_404
 
 
 # get data
@@ -33,26 +34,36 @@ def index(request):
     data = json.loads(json_string)
     User = get_user_model()
     users = User.objects.all()
-    comments = Comment.objects.all().order_by('-published_date')
+    comment = Comment.objects.all()
+    user_comments = Comment.objects.all().order_by('-published_date')
 
     return render(request, 'buoys_app/index.html', {
         'data': data,
         'users': users,
-        'comments': comments
+        'comment': comment,
+        'user_comment': user_comments,
+        'new_comment_form': NewCommentForm()
     })
 
 
 @login_required
 def new_comment(request):
     if request.method == 'POST':
-        form = NewCommentForm(request.POST)
-        if form.is_valid():
+        new_comment_form = NewCommentForm(request.POST)
+        if new_comment_form.is_valid():
             comment = Comment()
             comment.user = request.user
-            comment.text = form.cleaned_data['text']
+            comment.body = new_comment_form.cleaned_data['body']
             comment.save()
 
-    return HttpResponseRedirect(reverse('buoys_app/index.html'))
+    return HttpResponseRedirect(reverse('buoys_app:index'))
+
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_list_or_404(Comment, id=comment_id, user=request.user)
+    comment.delete()
+    return HttpResponseRedirect(reverse('buoys_app:index'))
 
 
 def register_request(request):

@@ -10,5 +10,6 @@ urlpatterns = [
     path('login/', views.login_request, name='login'),
     path('logout/', views.logout_request, name='logout'),
     path('new/', views.new_comment, name='new_comment'),
+    path('delete/<int:comment_id>', views.delete_comment, name='delete_comment'),
 
 ]

@@ -75,63 +75,59 @@
           </div>
         </button>
       </div>
-
       <!-- needs work... -->
       <div class="collapse collapse-input" id="collapse-input">
         
-          {% if not request.user.is_anonymous %}
+        <form action="{% url 'buoys_app:new_comment' %}" method="POST">
+          {% csrf_token %}
+          <div class="input-group input-group-sm align-items-start flex-nowrap">
+            {{ new_comment_form|crispy }}
+            <input class="btn btn-primary btn-submit py-1" type="submit" value="+" id="inputGroup-sizing-sm">
+          </div> 
+        </form>
 
-              <form action="{% url 'buoys_app:new_comment' %}" method="POST">
-                {% csrf_token %}
-  
-                {{ form|crispy }}
-
-              <div class="input-group input-group-sm mb-4 mx-0">
-                <input type="text" class="form-control comments-input" placeholder="add comment" aria-label="add comment" aria-describedby="button-addon2">
-                <button class="btn btn-primary" type="button" id="button-addon2">+</button>
-              </div>
-            </form>
-
-          {% endif %}
       </div>
+
     {% else %} 
         <p class="comments-title mb-3">Comments...</p>
     {% endif %}
 
-    <!-- if there are no comments for buoy... -->
-    {% if not user.comments.all %}
+    <!-- if there are no comments... -->
+    {% comment %} {% if not user.comments.all %}
       <p>No comments yet...</p>
     {% else %}
       <!-- else loop through all comments -->
       {% for user in users %}
         {% for comment in user.comments.all %}
-
           <!-- add delete button if user's comment -->
           {% if not request.user == comment.user %}
             <p class="fw-bold mb-0">
-              {{ user.first_name }}&nbsp;{{ user.last_name }}
-              {% comment %} {{ comment.user_agency }} - {{ user.first_name }}&nbsp;{{ user.last_name }} {% endcomment %}
+              {{ comment.agency }} - {{ user.first_name }}&nbsp;{{ user.last_name }}
             </p>
+            <small class="text-muted">{{ comment.published_date }}</small>
+            <p class="mb-0">{{ comment.body }}</p>
           {% else %}
-            <div class="d-flex justify-content-between align-items-end pb-0">
-              <p class="fw-bold mb-0">
-                {{ user.first_name }}&nbsp;{{ user.last_name }} 
-              </p>
-              <button type="button" class="btn btn-link text-nowrap p-0 delete-icon" title="delete comment" data-bs-toggle="" href="#" aria-expanded="false" aria-controls=""">
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-              </button>
+            <div class="comment-block">
+              <div class="d-flex justify-content-between align-items-end pb-0">
+                <p class="fw-bold mb-0">
+                  {{ comment.agency }} - {{ user.first_name }}&nbsp;{{ user.last_name }}
+                </p>
+                <a type="button" class="btn btn-link text-nowrap p-0 delete-icon" title="delete comment" href="{% url 'buoys_app:delete_comment' comment.id %}" aria-expanded="false" aria-controls=""">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                  </svg>
+                </a>
+              </div>
+              <small class="text-muted">{{ comment.published_date }}</small>
+              <p class="mb-0">{{ comment.body }}</p>
+              <hr>
             </div>
           {% endif %}
-        
-
-          <small class="text-muted">{{ comment.published_date }}</small>
-          <p class="mb-0">{{ comment.body }}</p>
-          <hr>
         {% endfor %}
       {% endfor %}
-    {% endif %}
+    {% endif %} {% endcomment %}
+
+
   </template>
 
   {% comment %} <template class="comments-header">
