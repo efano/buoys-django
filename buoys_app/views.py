@@ -51,6 +51,7 @@ def new_comment(request):
         if new_comment_form.is_valid():
             comment = Comment()
             comment.user = request.user
+            comment.buoy_id = request.POST['buoyID']
             comment.body = new_comment_form.cleaned_data['body']
             comment.save()
 

@@ -226,9 +226,12 @@ function drawFeatures() {
     const accBtnName = document.querySelectorAll('.buoy-name')
     accBtnName.forEach((acc, index) => {
       let commentBtn = $('.btn-comments')
+      let hiddenField =  $('.hidden-field')
       const btnIndex = commentBtn[index]
+      const hiddenIndex = hiddenField[index]
       let commentBtnID = $(btnIndex).attr('id', 'comment-' + acc.id)
       let commentValue = $(btnIndex).attr('value', acc.id)
+      let hiddenFieldValue =  $(hiddenIndex).attr('value', acc.id)
     })
   }
 

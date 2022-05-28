@@ -80,7 +80,8 @@
           {% csrf_token %}
           <div class="input-group input-group-sm align-items-start flex-nowrap">
             {{ new_comment_form|crispy }}
-            <input class="btn btn-primary btn-submit px-1 py-1" type="submit" value="+" id="inputGroup-sizing-sm">
+            <input class="btn btn-primary btn-submit px-1 py-1" type="submit" value="+"/>
+            <input class="hidden-field" type="hidden" name="buoyID"/>
           </div> 
         </form>
       </div>
