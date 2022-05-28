@@ -3,8 +3,6 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 import requests
-from .forms import *
-from .models import *
 
 import pandas as pd
 import json
@@ -12,9 +10,10 @@ from siphon.simplewebservice.ndbc import NDBC
 
 from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib import messages
+from .forms import *
+from .models import *
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_list_or_404
 
 
 # get data
@@ -32,16 +31,15 @@ df = df.rename(columns={'3hr_pressure_tendency': 'pressure_tendency_3hr'})
 def index(request):
     json_string = df.to_json(orient='records')
     data = json.loads(json_string)
+
     User = get_user_model()
     users = User.objects.all()
-    comment = Comment.objects.all()
-    user_comments = Comment.objects.all().order_by('-published_date')
+    comments = Comment.objects.all().order_by('-published_date')[:20]
 
     return render(request, 'buoys_app/index.html', {
         'data': data,
         'users': users,
-        'comment': comment,
-        'user_comment': user_comments,
+        'comments': comments,
         'new_comment_form': NewCommentForm()
     })
 
@@ -61,7 +59,7 @@ def new_comment(request):
 
 @login_required
 def delete_comment(request, comment_id):
-    comment = get_list_or_404(Comment, id=comment_id, user=request.user)
+    comment = Comment.objects.get(id=comment_id, user=request.user)
     comment.delete()
     return HttpResponseRedirect(reverse('buoys_app:index'))
 
