@@ -32,7 +32,7 @@ const svgTemplate = `
 
 const options = {
   center: [45.3, -85],
-  zoom: 4,
+  zoom: 6,
   zoomSnap: 0,
   zoomControl: false
 }
@@ -50,7 +50,6 @@ map.addControl(L.control.zoom({
 }))
 
 drawFeatures()
-
 function drawFeatures() {
 
   const dataLayer = L.geoJson(geojson, {
@@ -93,7 +92,7 @@ function drawFeatures() {
       let waveHeight = layer.feature.properties.wave_height
       waveHeight = (waveHeight != null) ? waveHeight + ' m' : 'no data'
       const sidebarList = document.querySelector('#sidebar-list')
-      const comments = document.querySelector('.comments').innerHTML
+      const commentsHeader = document.querySelector('.comments-header').innerHTML
 
       sidebarList.innerHTML += `
           <div class="accordion-item acc-${station}" id="acc-${station}">
@@ -145,7 +144,7 @@ function drawFeatures() {
                   </tbody>
                </table>
                <hr class="hr-end"> 
-               <div>${(comments)}</div>     
+               <div>${(commentsHeader)}</div>     
               </div>
             </div>
           </div>
@@ -159,18 +158,15 @@ function drawFeatures() {
       layer.on('mouseover', function () {
         document.getElementById(station).classList.add('highlight')
       }).openTooltip()
-
       layer.on('click', function () {
         //map.flyTo(e.latlng, 10)
         scrollAccordion(station)
       })
-
       layer.on('mouseout', function () {
         document.getElementById(station).classList.remove('highlight')
       }).closeTooltip()
     }
   }).addTo(map)
-
   map.fitBounds(dataLayer.getBounds(), {
     padding: [20, 20]
   })
@@ -183,17 +179,16 @@ function drawFeatures() {
       let sidebarID = e.currentTarget.id.replace('acc-', '')
       highlightBuoyIcon(sidebarID)
     })
-
     btn.addEventListener('mouseout', (e) => {
       e.currentTarget.classList.remove('buoy-highlight')
-
       leafletMarker.forEach((item) => {
         item.classList.remove('buoy-highlight')
       })
-
       $('.leaflet-tooltip').css('visibility', 'hidden')
     })
   })
+
+  addCommentID()
 
   function highlightBuoyIcon(sidebarID) {
     dataLayer.eachLayer(function (layer) {
@@ -226,6 +221,22 @@ function drawFeatures() {
       }
     }
   }
+  
+  function addCommentID() {
+    const accBtnName = document.querySelectorAll('.buoy-name')
+    accBtnName.forEach((acc, index) => {
+      let commentBtn = $('.btn-comments')
+      const btnIndex = commentBtn[index]
+      let commentBtnID = $(btnIndex).attr('id', 'comment-' + acc.id)
+      let commentValue = $(btnIndex).attr('value', acc.id)
+    })
+  }
+
+  // match commentBtnID == accBtnName
+  //inner html of comment body...
+
+    
+  
 
 
 

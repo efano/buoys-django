@@ -62,7 +62,7 @@
     </div>
   </div>
 
-  <template class="comments">
+  <template class="comments-header">
     <!-- if user is logged in show comment button and input form-->
     {% if user.is_authenticated %}
       <div class="d-flex justify-content-between align-items-start pb-0">
@@ -75,9 +75,7 @@
           </div>
         </button>
       </div>
-      <!-- needs work... -->
       <div class="collapse collapse-input" id="collapse-input">
-        
         <form action="{% url 'buoys_app:new_comment' %}" method="POST">
           {% csrf_token %}
           <div class="input-group input-group-sm align-items-start flex-nowrap">
@@ -85,13 +83,13 @@
             <input class="btn btn-primary btn-submit px-1 py-1" type="submit" value="+" id="inputGroup-sizing-sm">
           </div> 
         </form>
-
       </div>
-
     {% else %} 
         <p class="comments-title mb-3">Comments...</p>
     {% endif %}
+  </template>
 
+  <template class="comments-body">
     <!-- if there are no comments... -->
    {% if not comments %}
       <p>No comments yet...</p>
@@ -100,7 +98,6 @@
       {% for comment in comments %}
         <!-- add delete button if it is the user's comment -->
         {% if request.user == comment.user %}
-
             <div class="d-flex justify-content-between align-items-end pb-0">
               <p class="fw-bold mb-0">
                 {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
@@ -114,7 +111,6 @@
             <small class="text-muted">{{ comment.published_date }}</small>
             <p class="mb-0">{{ comment.body }}</p>
             <hr>
-
         {% else %}
           <p class="fw-bold mb-0">
             {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
@@ -125,7 +121,6 @@
         {% endif %}
       {% endfor %}
     {% endif %}
-
   </template>
 
   {% comment %} <template class="comments-header">
