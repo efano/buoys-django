@@ -51,7 +51,7 @@ map.addControl(L.control.zoom({
 
 drawFeatures()
 function drawFeatures() {
-
+  
   const dataLayer = L.geoJson(geojson, {
     pointToLayer: function (feature, latlng) {
       return L.marker(latlng, {
@@ -93,6 +93,7 @@ function drawFeatures() {
       waveHeight = (waveHeight != null) ? waveHeight + ' m' : 'no data'
       const sidebarList = document.querySelector('#sidebar-list')
       const commentsHeader = document.querySelector('.comments-header').innerHTML
+      const commentsBody = document.querySelector('.comments-body').innerHTML
 
       sidebarList.innerHTML += `
           <div class="accordion-item acc-${station}" id="acc-${station}">
@@ -143,12 +144,14 @@ function drawFeatures() {
                     </tr>
                   </tbody>
                </table>
-               <hr class="hr-end"> 
-               <div>${(commentsHeader)}</div>     
+               <hr> 
+               <div class="comments-header-section">${(commentsHeader)}</div>
+               <div id="body-${(station)}" class="comments-body-section">${(commentsBody)}</div>
               </div>
             </div>
           </div>
         `
+      $('.comments-attribute').hide()
 
       let tooltip = ('<div class=tooltip-buoy-text>' + 'Buoy ID: ' +
         '<span class=tooltip-id>' + feature.properties.station + '</span></div>')
@@ -188,8 +191,6 @@ function drawFeatures() {
     })
   })
 
-  addCommentID()
-
   function highlightBuoyIcon(sidebarID) {
     dataLayer.eachLayer(function (layer) {
       const stationID = layer.feature.properties.station
@@ -221,26 +222,30 @@ function drawFeatures() {
       }
     }
   }
-  
-  function addCommentID() {
+  addCommentIDs()
+  function addCommentIDs() {
     const accBtnName = document.querySelectorAll('.buoy-name')
     accBtnName.forEach((acc, index) => {
       let commentBtn = $('.btn-comments')
       let hiddenField =  $('.hidden-field')
+      let collapseInput = $('.collapse-input')
       const btnIndex = commentBtn[index]
       const hiddenIndex = hiddenField[index]
+      const inputIndex = collapseInput[index]
       let commentBtnID = $(btnIndex).attr('id', 'comment-' + acc.id)
+      let commentBtnHref = $(btnIndex).attr('href', '#collapse-input-' + acc.id)
       let commentValue = $(btnIndex).attr('value', acc.id)
       let hiddenFieldValue =  $(hiddenIndex).attr('value', acc.id)
+      let collapseInputID = $(inputIndex).attr('id', 'collapse-input-' + acc.id)
     })
-  }
 
-  // match commentBtnID == accBtnName
-  //inner html of comment body...
-
+    $('.comments-attribute').each(function(index, value) {
+      let bodyID = $(this).parent().attr('id')
+      let parentID = bodyID.replace('body-', '')
+      if (this.id == parentID) {
+        $(this).show()
+      } 
+    })
     
-  
-
-
-
+  }
 }

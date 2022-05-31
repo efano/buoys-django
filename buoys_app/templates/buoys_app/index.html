@@ -80,38 +80,34 @@
           {% csrf_token %}
           <div class="input-group input-group-sm align-items-start flex-nowrap">
             {{ new_comment_form|crispy }}
-            <input class="btn btn-primary btn-submit px-1 py-1" type="submit" value="+"/>
+            <input class="btn btn-primary rounded-end btn-submit px-1 py-1" type="submit" value="+"/>
             <input class="hidden-field" type="hidden" name="buoyID"/>
           </div> 
         </form>
       </div>
     {% else %} 
-        <p class="comments-title mb-3">Comments...</p>
+      <p class="comments-title mb-3">Comments...</p>
     {% endif %}
   </template>
 
   <template class="comments-body">
-    <!-- if there are no comments... -->
-   {% if not comments %}
-      <p>No comments yet...</p>
-    {% else %}
-      <!-- else loop through all comments -->
-      {% for comment in comments %}
+    {% for comment in comments %}
+      <span class="comments-attribute" id="{{ comment.buoy_id }}">
         <!-- add delete button if it is the user's comment -->
         {% if request.user == comment.user %}
-            <div class="d-flex justify-content-between align-items-end pb-0">
-              <p class="fw-bold mb-0">
-                {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
-              </p>
-              <a href="{% url 'buoys_app:delete_comment' comment.id %}" class="btn btn-link text-nowrap p-0 delete-icon" title="delete comment" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-              </a>
-            </div>
-            <small class="text-muted">{{ comment.published_date }}</small>
-            <p class="mb-0">{{ comment.body }}</p>
-            <hr>
+          <div class="d-flex justify-content-between align-items-end pb-0">
+            <p class="fw-bold mb-0">
+              {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
+            </p>
+            <a href="{% url 'buoys_app:delete_comment' comment.id %}" class="btn btn-link text-nowrap p-0 delete-icon" title="delete comment" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </a>
+          </div>
+          <small class="text-muted">{{ comment.published_date }}</small>
+          <p class="mb-0">{{ comment.body }}</p>
+          <hr>
         {% else %}
           <p class="fw-bold mb-0">
             {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
@@ -120,70 +116,9 @@
           <p class="mb-0">{{ comment.body }}</p> 
           <hr>
         {% endif %}
-      {% endfor %}
-    {% endif %}
+      </span>
+    {% endfor %}
   </template>
-
-  {% comment %} <template class="comments-header">
-    {% if user.is_authenticated %}
-      <div class="d-flex justify-content-between align-items-start pb-0">
-        <div class="comments-title">Comments:</div>
-        <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
-          <div class="comments-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
-              <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
-            </svg>
-            <span>+</span>
-          </div>
-        </button>
-      </div>
-      <hr>
-      <div class="collapse collapse-input" id="collapse-input">
-        <div class="input-group input-group-sm mb-3">
-          <input type="text" class="form-control comments-input" placeholder="Comments" aria-label="Comments" aria-describedby="button-addon2">
-          <button class="btn btn-info" type="button" id="button-addon2">+</button>
-        </div>
-      </div>
-    {% else %} 
-      <div class="d-flex justify-content-between align-items-start">
-        <div class="comments-title">Comments:</div>
-        <div>No comments yet...&ensp;<a href="{% url 'buoys_app:login' %}">Add one</a></div>
-      <hr>
-      </div>
-      <hr>
-    {% endif %}
-  </template> {% endcomment %}
-
-  {% comment %} {% if user.is_authenticated %}
-
-      <div class="d-flex justify-content-between align-items-start pb-0">
-        <div class="comments-title">Comments...</div>
-        <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
-          <div class="comments-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-text-fill" viewBox="0 0 16 16">
-              <path d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353V2zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1zm0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1z"/>
-            </svg>
-            <span>+</span>
-          </div>
-        </button>
-      </div> {% endcomment %}
-      
-
-
-
-      {% comment %} <div class="collapse collapse-input" id="collapse-input">
-        <div class="input-group input-group-sm mb-3">
-          {% if not request.user.is_anonymous %}
-          <form action="{% url 'new_comment %}" method="POST">
-              {% csrf_token %}
-              {{form}}
-              <input type="submit" value="Comment" class="form-control comments-input" placeholder="Comments" aria-label="Comments" aria-describedby="button-addon2">
-              <button class="btn btn-primary" type="button" id="button-addon2">+</button>
-          </form>
-          {% endif %}
-          
-        </div>
-      </div> {% endcomment %}
 
   <!-- map -->
   <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
