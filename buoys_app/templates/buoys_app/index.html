@@ -92,7 +92,7 @@
 
   <template class="comments-body">
     {% for comment in comments %}
-      <span class="comments-attribute" id="{{ comment.buoy_id }}">
+      <span class="comments-attribute" id="attribute-{{ comment.buoy_id }}">
         <!-- add delete button if it is the user's comment -->
         {% if request.user == comment.user %}
           <div class="d-flex justify-content-between align-items-end pb-0">

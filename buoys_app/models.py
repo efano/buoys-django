@@ -29,8 +29,5 @@ class Comment(models.Model):
     buoy_id = models.CharField(max_length=5, default='')
     body = models.CharField(max_length=255)
 
-    class Meta:
-        ordering = ['-published_date']
-
     def __str__(self):
-        return '%s - %s - %s' % (self.agency, self.user, self.body)
+        return '%s - %s - %s - %s' % (self.agency, self.user, self.buoy_id, self.body)

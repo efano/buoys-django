@@ -222,6 +222,7 @@ function drawFeatures() {
       }
     }
   }
+
   addCommentIDs()
   function addCommentIDs() {
     const accBtnName = document.querySelectorAll('.buoy-name')
@@ -241,11 +242,10 @@ function drawFeatures() {
 
     $('.comments-attribute').each(function(index, value) {
       let bodyID = $(this).parent().attr('id')
-      let parentID = bodyID.replace('body-', '')
-      if (this.id == parentID) {
+      let parentID = bodyID.replace('body-', 'attribute-')
+      if (this.id === parentID) {
         $(this).show()
-      } 
+      }  
     })
-    
   }
 }
