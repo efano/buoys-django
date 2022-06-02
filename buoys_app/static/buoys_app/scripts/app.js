@@ -93,7 +93,6 @@ function drawFeatures() {
       waveHeight = (waveHeight != null) ? waveHeight + ' m' : 'no data'
       const sidebarList = document.querySelector('#sidebar-list')
       const commentsHeader = document.querySelector('.comments-header').innerHTML
-      const commentsBody = document.querySelector('.comments-body').innerHTML
 
       sidebarList.innerHTML += `
           <div class="accordion-item acc-${station}" id="acc-${station}">
@@ -146,12 +145,14 @@ function drawFeatures() {
                </table>
                <hr> 
                <div class="comments-header-section">${(commentsHeader)}</div>
-               <div id="body-${(station)}" class="comments-body-section">${(commentsBody)}</div>
+               
               </div>
             </div>
           </div>
         `
+      //const test = `<div class="comment-group"><div id="body-${(station)}" class="comments-body-section">${(commentsBody)}</div></div>`
       $('.comments-attribute').hide()
+      
 
       let tooltip = ('<div class=tooltip-buoy-text>' + 'Buoy ID: ' +
         '<span class=tooltip-id>' + feature.properties.station + '</span></div>')
@@ -240,12 +241,55 @@ function drawFeatures() {
       let collapseInputID = $(inputIndex).attr('id', 'collapse-input-' + acc.id)
     })
 
-    $('.comments-attribute').each(function(index, value) {
-      let bodyID = $(this).parent().attr('id')
-      let parentID = bodyID.replace('body-', 'attribute-')
-      if (this.id === parentID) {
-        $(this).show()
-      }  
-    })
+    // $('.comments-attribute').each(function(index, value) {
+    //   let bodyID = $(this).parent().attr('id')
+    //   let parentID = bodyID.replace('body-', 'attribute-')
+    //   if (this.id === parentID) {
+    //     $(this).show()
+    //   }  
+    // })
   }
+
+  
 }
+
+getComments()
+  function getComments() {
+    const accBtnName = $('.accordion-button')
+    const commentsBody = document.querySelector('.comments-body').innerHTML
+    let newComments = []
+    
+    $(accBtnName).each(function() {
+      accBtnNameID = this.id
+      $(commentsBody).each(function() {
+        commentsBodyID = this.id
+        if (commentsBodyID != null) {
+          let replaceID = this.id.replace('attribute-', 'station-')
+          if (replaceID === accBtnNameID) {
+            const newClass = $(this).addClass(accBtnNameID)
+            //$(commentsBody).insertAfter('.comments-header-section')
+            //console.log(newClass)
+            newComments.push(newClass)
+          }  
+        }
+      })
+
+      // loop through new list ... 
+      console.log(accBtnNameID)
+      console.log(newComments)
+      if ($(newComments).hasClass(accBtnNameID) ) {
+        //$(newComments).insertAfter('.comments-header-section')
+        console.log(newComments)
+      }
+      
+    })
+    
+
+    
+
+
+
+  }
+
+
+
