@@ -56,6 +56,35 @@
             <div class="accordion" id="sidebar-list">
               <!-- sidebarList.innerHTML here -->
             </div>
+            <div hidden class="comments-body">
+              {% for comment in comments %}
+                <span class="comments-attribute" id="attribute-{{ comment.buoy_id }}">
+                  <!-- add delete button if it is the user's comment -->
+                  {% if request.user == comment.user %}
+                    <div class="d-flex justify-content-between align-items-end pb-0">
+                      <p class="fw-bold mb-0">
+                        {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
+                      </p>
+                      <a href="{% url 'buoys_app:delete_comment' comment.id %}" class="btn btn-link text-nowrap p-0 delete-icon" title="delete comment" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                      </a>
+                    </div>
+                    <small class="text-muted">{{ comment.published_date }}</small>
+                    <p class="mb-0">{{ comment.body }}</p>
+                    <hr>
+                  {% else %}
+                    <p class="fw-bold mb-0">
+                      {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
+                    </p>
+                    <small class="text-muted">{{ comment.published_date }}</small>
+                    <p class="mb-0">{{ comment.body }}</p> 
+                    <hr>
+                  {% endif %}
+                </span>
+              {% endfor %}
+            </div>
           </div>
         </div>
       </nav>
@@ -86,38 +115,8 @@
         </form>
       </div>
     {% else %} 
-      <p class="comments-title mb-3">Comments...</p>
+      <div class="comments-title mb-3">Comments...</div>
     {% endif %}
-  </template>
-
-  <template class="comments-body">
-    {% for comment in comments %}
-      <span class="comments-attribute" id="attribute-{{ comment.buoy_id }}">
-        <!-- add delete button if it is the user's comment -->
-        {% if request.user == comment.user %}
-          <div class="d-flex justify-content-between align-items-end pb-0">
-            <p class="fw-bold mb-0">
-              {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
-            </p>
-            <a href="{% url 'buoys_app:delete_comment' comment.id %}" class="btn btn-link text-nowrap p-0 delete-icon" title="delete comment" aria-expanded="false">
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </a>
-          </div>
-          <small class="text-muted">{{ comment.published_date }}</small>
-          <p class="mb-0">{{ comment.body }}</p>
-          <hr>
-        {% else %}
-          <p class="fw-bold mb-0">
-            {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
-          </p>
-          <small class="text-muted">{{ comment.published_date }}</small>
-          <p class="mb-0">{{ comment.body }}</p> 
-          <hr>
-        {% endif %}
-      </span>
-    {% endfor %}
   </template>
 
   <!-- map -->

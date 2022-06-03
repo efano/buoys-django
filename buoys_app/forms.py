@@ -31,7 +31,7 @@ class NewUserForm(UserCreationForm):
 
 class NewCommentForm(forms.Form):
     body = forms.CharField(max_length=255, label=False, widget=forms.TextInput(
-        attrs={'class': "form-control form-control-sm rounded-0 rounded-start comments-input pe-4 me-5",
+        attrs={'class': "form-control form-control-sm rounded-0 rounded-start comments-input pe-4 me-5 mb-2",
                'placeholder': "add comment",
                'aria-label': "add comment",
                'aria-describedby': "button-addon2"

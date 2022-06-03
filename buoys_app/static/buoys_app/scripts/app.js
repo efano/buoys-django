@@ -50,8 +50,9 @@ map.addControl(L.control.zoom({
 }))
 
 drawFeatures()
+
 function drawFeatures() {
-  
+
   const dataLayer = L.geoJson(geojson, {
     pointToLayer: function (feature, latlng) {
       return L.marker(latlng, {
@@ -150,9 +151,6 @@ function drawFeatures() {
             </div>
           </div>
         `
-      //const test = `<div class="comment-group"><div id="body-${(station)}" class="comments-body-section">${(commentsBody)}</div></div>`
-      $('.comments-attribute').hide()
-      
 
       let tooltip = ('<div class=tooltip-buoy-text>' + 'Buoy ID: ' +
         '<span class=tooltip-id>' + feature.properties.station + '</span></div>')
@@ -225,71 +223,45 @@ function drawFeatures() {
   }
 
   addCommentIDs()
+  getComments()
+
   function addCommentIDs() {
-    const accBtnName = document.querySelectorAll('.buoy-name')
+    let accBtnName = document.querySelectorAll('.buoy-name')
+    let commentsHeaderSection = $('.comments-header-section')
+    let commentsBody = $('.comments-body').html()
+
     accBtnName.forEach((acc, index) => {
       let commentBtn = $('.btn-comments')
-      let hiddenField =  $('.hidden-field')
+      let hiddenField = $('.hidden-field')
       let collapseInput = $('.collapse-input')
       const btnIndex = commentBtn[index]
       const hiddenIndex = hiddenField[index]
       const inputIndex = collapseInput[index]
+      const commentsHeaderIndex = commentsHeaderSection[index]
       let commentBtnID = $(btnIndex).attr('id', 'comment-' + acc.id)
       let commentBtnHref = $(btnIndex).attr('href', '#collapse-input-' + acc.id)
       let commentValue = $(btnIndex).attr('value', acc.id)
-      let hiddenFieldValue =  $(hiddenIndex).attr('value', acc.id)
+      let hiddenFieldValue = $(hiddenIndex).attr('value', acc.id)
       let collapseInputID = $(inputIndex).attr('id', 'collapse-input-' + acc.id)
+      let commentsHeaderID = $(commentsHeaderIndex).attr('id', 'section-' + acc.id)
     })
-
-    // $('.comments-attribute').each(function(index, value) {
-    //   let bodyID = $(this).parent().attr('id')
-    //   let parentID = bodyID.replace('body-', 'attribute-')
-    //   if (this.id === parentID) {
-    //     $(this).show()
-    //   }  
-    // })
   }
 
-  
-}
-
-getComments()
   function getComments() {
-    const accBtnName = $('.accordion-button')
-    const commentsBody = document.querySelector('.comments-body').innerHTML
-    let newComments = []
-    
-    $(accBtnName).each(function() {
-      accBtnNameID = this.id
-      $(commentsBody).each(function() {
-        commentsBodyID = this.id
-        if (commentsBodyID != null) {
-          let replaceID = this.id.replace('attribute-', 'station-')
-          if (replaceID === accBtnNameID) {
-            const newClass = $(this).addClass(accBtnNameID)
-            //$(commentsBody).insertAfter('.comments-header-section')
-            //console.log(newClass)
-            newComments.push(newClass)
-          }  
+    let commentsAttribute = $('.comments-attribute')
+    let commentsHeaderSection = $('.comments-header-section')
+
+    $(commentsHeaderSection).each(function (index, value) {
+      const commentsHeaderSectionIndex = commentsHeaderSection[index]
+      let commentsHeaderSectionID = $(commentsHeaderSectionIndex).attr('id')
+
+      $(commentsAttribute).each(function (index, value) {
+        commentsAttributeID = this.id
+        let idReplace = commentsAttributeID.replace('attribute-', 'section-')
+        if (idReplace === commentsHeaderSectionID) {
+          $('.comments-header-section#' + commentsHeaderSectionID).append($(this))
         }
       })
-
-      // loop through new list ... 
-      console.log(accBtnNameID)
-      console.log(newComments)
-      if ($(newComments).hasClass(accBtnNameID) ) {
-        //$(newComments).insertAfter('.comments-header-section')
-        console.log(newComments)
-      }
-      
     })
-    
-
-    
-
-
-
   }
-
-
-
+}
