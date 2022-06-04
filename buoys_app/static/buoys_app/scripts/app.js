@@ -50,7 +50,6 @@ map.addControl(L.control.zoom({
 }))
 
 drawFeatures()
-
 function drawFeatures() {
 
   const dataLayer = L.geoJson(geojson, {
@@ -221,14 +220,14 @@ function drawFeatures() {
       }
     }
   }
+}
 
-  addCommentIDs()
-  getComments()
+addCommentIDs()
+getComments()
 
   function addCommentIDs() {
     let accBtnName = document.querySelectorAll('.buoy-name')
     let commentsHeaderSection = $('.comments-header-section')
-    let commentsBody = $('.comments-body').html()
 
     accBtnName.forEach((acc, index) => {
       let commentBtn = $('.btn-comments')
@@ -238,18 +237,20 @@ function drawFeatures() {
       const hiddenIndex = hiddenField[index]
       const inputIndex = collapseInput[index]
       const commentsHeaderIndex = commentsHeaderSection[index]
-      let commentBtnID = $(btnIndex).attr('id', 'comment-' + acc.id)
-      let commentBtnHref = $(btnIndex).attr('href', '#collapse-input-' + acc.id)
-      let commentValue = $(btnIndex).attr('value', acc.id)
-      let hiddenFieldValue = $(hiddenIndex).attr('value', acc.id)
-      let collapseInputID = $(inputIndex).attr('id', 'collapse-input-' + acc.id)
-      let commentsHeaderID = $(commentsHeaderIndex).attr('id', 'section-' + acc.id)
+      $(btnIndex).attr('id', 'comment-' + acc.id)
+      $(btnIndex).attr('href', '#collapse-input-' + acc.id)
+      $(btnIndex).attr('value', acc.id)
+      $(hiddenIndex).attr('value', acc.id)
+      $(inputIndex).attr('id', 'collapse-input-' + acc.id)
+      $(commentsHeaderIndex).attr('id', 'section-' + acc.id)
     })
   }
 
   function getComments() {
     let commentsAttribute = $('.comments-attribute')
     let commentsHeaderSection = $('.comments-header-section')
+    const commentsContainer = '<div class="comments-container">' + '</div>'
+    $(commentsContainer).insertAfter('.collapse-input')
 
     $(commentsHeaderSection).each(function (index, value) {
       const commentsHeaderSectionIndex = commentsHeaderSection[index]
@@ -259,9 +260,21 @@ function drawFeatures() {
         commentsAttributeID = this.id
         let idReplace = commentsAttributeID.replace('attribute-', 'section-')
         if (idReplace === commentsHeaderSectionID) {
-          $('.comments-header-section#' + commentsHeaderSectionID).append($(this))
+          $('.comments-header-section#' + commentsHeaderSectionID).children('.comments-container').append($(this))
         }
       })
     })
+    $('.comments-container').each(function() {
+      let thisContainer = $(this)
+      let thisChildren = $(thisContainer).children()
+
+      if (thisChildren.length == 0) {
+        $(thisContainer).append($('<div class="mb-2">No comments yet...</div>'))
+      }
+    })
   }
-}
+
+  
+  
+
+
