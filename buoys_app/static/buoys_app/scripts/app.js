@@ -269,25 +269,10 @@ getComments()
       let thisChildren = $(thisContainer).children()
 
       if (thisChildren.length == 0) {
-        $(thisContainer).append($('<div class="mb-2">No comments yet...</div>'))
+        $(thisContainer).append($('<div class="mb-3">No comments yet...</div>'))
       }
     })
   }
-
-  // $(document).ready(function() {
-  //   // Get saved data from sessionStorage
-  //   let selectedCollapse = sessionStorage.getItem('.accordion-collapse')
-  //   if(selectedCollapse != null) {
-  //     $('.accordion-collapse').removeClass('show')
-  //     $(selectedCollapse).addClass('show')
-  //   }
-  //   //To set, which one will be opened
-  //   $('.accordion-button').on('click', function(){ 
-  //     let target = $(this).data('data-bs-target')
-  //     //Save data to sessionStorage
-  //     sessionStorage.setItem('.accordion-collapse', target)
-  //   })
-  // })
   
 
   
