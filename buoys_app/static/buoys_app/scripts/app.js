@@ -104,7 +104,7 @@ function drawFeatures() {
             </h2>
 
             <div id="collapse${station}" class="accordion-collapse collapse" aria-labelledby="heading${station}">
-              <div class="accordion-body">
+              <div class="accordion-body pb-1">
                 <div>Latest Observation:</div>
                 <div class="table-timestamp">${obTime}</div>
                 <table class="table table-borderless table-sm">
@@ -273,6 +273,22 @@ getComments()
       }
     })
   }
+
+  // $(document).ready(function() {
+  //   // Get saved data from sessionStorage
+  //   let selectedCollapse = sessionStorage.getItem('.accordion-collapse')
+  //   if(selectedCollapse != null) {
+  //     $('.accordion-collapse').removeClass('show')
+  //     $(selectedCollapse).addClass('show')
+  //   }
+  //   //To set, which one will be opened
+  //   $('.accordion-button').on('click', function(){ 
+  //     let target = $(this).data('data-bs-target')
+  //     //Save data to sessionStorage
+  //     sessionStorage.setItem('.accordion-collapse', target)
+  //   })
+  // })
+  
 
   
   

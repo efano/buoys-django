@@ -68,15 +68,24 @@ def delete_comment(request, comment_id):
 def register_request(request):
     if request.method == 'POST':
         form = NewUserForm(request.POST)
-        if form.is_valid():
+        profile_form = NewProfileForm(request.POST)
+
+        if form.is_valid() and profile_form.is_valid():
             user = form.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+
             login(request, user)
             #messages.success(request, 'Registration successful.')
             return redirect('buoys_app:index')
         messages.error(
             request, 'Unsuccessful registration. Invalid information.')
-    form = NewUserForm()
-    return render(request, 'buoys_app/form_register.html', {'register_form': form})
+    else:
+        form = NewUserForm()
+        profile_form = NewProfileForm()
+
+    return render(request, 'buoys_app/form_register.html', {'register_form': form, 'profile_form': profile_form})
 
 
 def login_request(request):

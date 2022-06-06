@@ -63,7 +63,7 @@
                   {% if request.user == comment.user %}
                     <div class="d-flex justify-content-between align-items-end pb-0">
                       <p class="fw-bold mb-0">
-                        {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
+                        {{ user.profile.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
                       </p>
                       <a href="{% url 'buoys_app:delete_comment' comment.id %}" class="btn btn-link text-nowrap p-0 delete-icon" title="delete comment" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
@@ -76,7 +76,7 @@
                     <hr>
                   {% else %}
                     <p class="fw-bold mb-0">
-                      {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
+                      {{ user.profile.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
                     </p>
                     <small class="text-muted">{{ comment.published_date }}</small>
                     <p class="mb-0">{{ comment.body }}</p> 

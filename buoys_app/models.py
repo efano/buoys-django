@@ -6,18 +6,12 @@ from django.dispatch import receiver
 
 
 # Create your models here.
-# class Profile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     agency = models.CharField("agency", max_length=50, blank=True)
+class Profile(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    agency = models.CharField('agency', max_length=50)
 
-#     @receiver(post_save, sender=User)
-#     def create_user_profile(sender, instance, created, **kwargs):
-#         if created:
-#             Profile.objects.create(user=instance)
-
-#     @receiver(post_save, sender=User)
-#     def save_user_profile(sender, instance, **kwargs):
-#         instance.profile.save()
+    def __str__(self):
+        return '%s - %s' % (self.agency, self.user)
 
 
 class Comment(models.Model):
