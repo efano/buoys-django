@@ -264,6 +264,7 @@ getComments()
         }
       })
     })
+    // if no comments...
     $('.comments-container').each(function() {
       let thisContainer = $(this)
       let thisChildren = $(thisContainer).children()
