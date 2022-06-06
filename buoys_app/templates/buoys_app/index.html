@@ -38,7 +38,7 @@
 
       <div class="navbar-nav d-flex flex-row text-nowrap">
         {% if user.is_authenticated %}
-          <span class="nav-user px-3" href="#">Hello, {{ user.first_name|default:'Guest' }}</span>
+          <span class="nav-user px-3" href="#">Hello, {{ user.first_name }}</span>
           <a class="nav-link px-3" href="{% url 'buoys_app:logout' %}">Logout</a>
         {% else %}
           <a class="nav-link px-3" href="{% url 'buoys_app:login' %}">Login</a>
@@ -60,11 +60,10 @@
               {% for comment in comments %}
                 <span class="comments-attribute" id="attribute-{{ comment.buoy_id }}">
                   <!-- add delete button if it is the user's comment -->
-                  {% if request.user == comment.user %}
+                  {% if request.user == comment.user %} 
                     <div class="d-flex justify-content-between align-items-end pb-0">
                       <p class="fw-bold mb-0">
                         {{ comment.user.profile.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
-                        {% comment %} {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }} {% endcomment %}
                       </p>
                       <a href="{% url 'buoys_app:delete_comment' comment.id %}" class="btn btn-link text-nowrap p-0 delete-icon" title="delete comment" aria-expanded="false">
                         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
@@ -75,10 +74,9 @@
                     <small class="text-muted">{{ comment.published_date }}</small>
                     <p class="mb-0">{{ comment.body }}</p>
                     <hr>
-                  {% else %} <!-- if not the logged in user -->
+                  {% else %}
                     <p class="fw-bold mb-0">
                       {{ comment.user.profile.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }}
-                      {% comment %} {{ comment.agency }} - {{ comment.user.first_name }}&nbsp;{{ comment.user.last_name }} {% endcomment %}
                     </p>
                     <small class="text-muted">{{ comment.published_date }}</small>
                     <p class="mb-0">{{ comment.body }}</p> 
@@ -95,7 +93,7 @@
 
   <template class="comments-header">
     <!-- if user is logged in show comment button and input form-->
-    {% if user.is_authenticated %}
+    {% if request.user.is_authenticated %}
       <div class="d-flex justify-content-between align-items-start pb-0">
         <div class="comments-title mb-4">Comments:</div>
         <button type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
@@ -118,6 +116,24 @@
       </div>
     {% else %} 
       <div class="comments-title mb-3">Comments:</div>
+      <button hidden type="button" class="btn btn-link text-nowrap btn-comments p-0" title="add comment" data-bs-toggle="collapse" href="#collapse-input" aria-expanded="false" aria-controls="collapse-input">
+        <div class="comments-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-fill" viewBox="0 0 16 16">
+            <path id="path2" d="M 2 0 A 2 2 0 0 0 0 2 L 0 10 A 2 2 0 0 0 2 12 L 4.5 12 A 1 1 0 0 1 5.3007812 12.400391 L 7.1992188 14.933594 A 1 1 0 0 0 8.8007812 14.933594 L 10.699219 12.400391 A 1 1 0 0 1 11.5 12 L 14 12 A 2 2 0 0 0 16 10 L 16 2 A 2 2 0 0 0 14 0 L 2 0 z M 7.9316406 2.2363281 A 0.5 0.5 0 0 1 8.4316406 2.7363281 L 8.4316406 5.7363281 L 11.431641 5.7363281 A 0.5 0.5 0 0 1 11.431641 6.7363281 L 8.4316406 6.7363281 L 8.4316406 9.7363281 A 0.5 0.5 0 0 1 7.4316406 9.7363281 L 7.4316406 6.7363281 L 4.4316406 6.7363281 A 0.5 0.5 0 0 1 4.4316406 5.7363281 L 7.4316406 5.7363281 L 7.4316406 2.7363281 A 0.5 0.5 0 0 1 7.9316406 2.2363281 z " />
+          </svg>
+        </div>
+      </button>
+      </div>
+      <div hidden class="collapse collapse-input" id="collapse-input">
+        <form action="{% url 'buoys_app:new_comment' %}" method="POST">
+          {% csrf_token %}
+          <div class="input-group input-group-sm align-items-start flex-nowrap">
+            {{ new_comment_form|crispy }}
+            <input class="btn btn-primary rounded-end btn-submit px-1 py-1" type="submit" value="+"/>
+            <input class="hidden-field" type="hidden" name="buoyID"/>
+          </div> 
+        </form>
+      </div>
     {% endif %}
   </template>
 
