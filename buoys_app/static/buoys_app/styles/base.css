@@ -86,13 +86,21 @@ a:hover {
 
 .highlight,
 .acc-highlight,
-.accordion-button:hover :only-child {
+.accordion-button:hover span:first-of-type {
   color: #d8534e;
   font-size: 1.1rem;
 }
 
 .accordion-button:hover {
   background-color: #EBEFF3;
+}
+
+.comment-bookmark > svg {
+  position: absolute;
+  top: -3px;
+  left: .5%;
+  color: #ffc107;
+  transform: scale(0.7);
 }
 
 .acc-item {
@@ -181,6 +189,14 @@ table tr td{
   color: #B84642
 }
 
+.login-link {
+  color: #E27E77;
+}
+
+.login-link:hover {
+  color: #D8534E;
+}
+
 
 /*
  * Map
@@ -191,6 +207,29 @@ table tr td{
   height: calc(100vh - 48px);
   padding-top: .5rem;
   margin: 0; 
+}
+
+.leaflet-control-scale-line {
+  border: 1px solid #222;
+  border-top: none;
+  line-height: .7;
+  padding: 2px 5px 1px;
+  font-size: 9px;
+  white-space: nowrap;
+  overflow: hidden;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: rgba(245, 245, 245, .6);
+}
+
+.leaflet-control-scale-line:not(:first-child) {
+  border-top: 1px solid #222;
+  border-bottom: none;
+  margin-top: 1px;
+}
+
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+  border-bottom: 1px solid #222;
 }
 
 .buoy-marker:hover,
