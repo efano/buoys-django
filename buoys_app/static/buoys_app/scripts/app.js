@@ -47,7 +47,7 @@ const map = L.map('map', options)
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'  + '<br>' +
-              "<span id='appDevBy'>Application developed by: </span><a id='me' href='https://efano.github.io/' target='_blank'>Lis Fano</a>",
+              "<span id='app-dev'>Application developed by: </span><a id='me' href='https://efano.github.io/' target='_blank'>Lis Fano</a>",
   subdomains: 'abcd',
   maxZoom: 19
 }).addTo(map)
