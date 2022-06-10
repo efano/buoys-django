@@ -254,6 +254,9 @@ table tr td{
   color:#d8534e;
 }
 
+.leaflet-control-attribution {
+  padding-bottom: 8px;
+}
 
 /*
  * Media Queries
